@@ -1,5 +1,6 @@
 💇‍♀️ Salão Excelência Estética
 Sistema de gerenciamento para salões de beleza e clínicas de estética, desenvolvido em Delphi 12.3 com banco de dados Firebird 5.0, seguindo o padrão de arquitetura MVC (Model-View-Controller).
+
 🚀 Funcionalidades Principais
 • 	Gerenciamento de Clientes
 • 	Cadastro de clientes com dados de contato e histórico
@@ -25,12 +26,14 @@ Sistema de gerenciamento para salões de beleza e clínicas de estética, desenv
 • 	Acesso a dados via FireDAC
 • 	Design responsivo com VCL
 • 	Armazenamento de imagens por BLOB ou caminho de arquivo
+
 🛠️ Tecnologias Utilizadas
 • 	Delphi 12.3 (VCL)
 • 	Firebird 5.0
 • 	IBExpert
 • 	Git/GitHub para versionamento
 • 	Arquitetura MVC
+
 📁 Estrutura de Pastas (sugerida)
 
 👥 Desenvolvedor
