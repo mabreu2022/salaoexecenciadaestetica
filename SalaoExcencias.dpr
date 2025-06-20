@@ -2,17 +2,29 @@ program SalaoExcencias;
 
 uses
   Vcl.Forms,
-  uView.Principal in 'View\uView.Principal.pas' {Form1},
+  uView.Principal in 'View\uView.Principal.pas' {FrmPrincipal},
   uView.Login in 'View\uView.Login.pas' {FrmLogin},
-  uDm in 'Dao\uDm.pas' {DataModule1: TDataModule};
+  uDao.Dm in 'Dao\uDao.Dm.pas' {DataModule1: TDataModule};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TFrmPrincipal, FrmPrincipal);
   Application.CreateForm(TFrmLogin, FrmLogin);
   Application.CreateForm(TDataModule1, DataModule1);
-  Application.Run;
+  // Cria manualmente a tela de login e exibe como modal
+  FrmLogin := TFrmLogin.Create(nil);
+  try
+    if FrmLogin.ShowModal = 1 then
+    begin
+      Application.CreateForm(TFrmPrincipal, FrmPrincipal);
+      Application.Run;
+    end
+    else
+      Application.Terminate;
+  finally
+    FrmLogin.Free;
+  end;
 end.

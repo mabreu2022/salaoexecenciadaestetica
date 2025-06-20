@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{A17A1CAA-4A9A-475D-ABC5-3B092BB00236}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="SalaoExcencias.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\calculadora precos minimos\CalculadoraPrecosMinimos.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SalaoExcencias">
+        <MSBuild Projects="SalaoExcencias.dproj"/>
+    </Target>
+    <Target Name="SalaoExcencias:Clean">
+        <MSBuild Projects="SalaoExcencias.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SalaoExcencias:Make">
+        <MSBuild Projects="SalaoExcencias.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CalculadoraPrecosMinimos">
+        <MSBuild Projects="..\calculadora precos minimos\CalculadoraPrecosMinimos.dproj"/>
+    </Target>
+    <Target Name="CalculadoraPrecosMinimos:Clean">
+        <MSBuild Projects="..\calculadora precos minimos\CalculadoraPrecosMinimos.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CalculadoraPrecosMinimos:Make">
+        <MSBuild Projects="..\calculadora precos minimos\CalculadoraPrecosMinimos.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SalaoExcencias;CalculadoraPrecosMinimos"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SalaoExcencias:Clean;CalculadoraPrecosMinimos:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SalaoExcencias:Make;CalculadoraPrecosMinimos:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

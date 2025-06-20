@@ -18,11 +18,11 @@ uses
   Vcl.Mask,
   uSessao,
   FireDAC.Comp.Client,
-  Dao.Dm,
+  uDao.Dm,
   System.Hash,
   FireDAC.Stan.Param, // para TFDParam.SetAsString
   Data.DB,            // para TDataSet.IsEmpty
-  uConstantes;
+  uConstantes, uView.Principal;
 
 type
   TFrmLogin = class(TForm)
@@ -83,6 +83,8 @@ begin
     begin
       IDUsuarioLogado := FDQ.FieldByName('IDUsuario').AsInteger;
       NomeUsuarioLogado := FDQ.FieldByName('NomeCompleto').AsString;
+      DataModule1.UsuarioLogado := edtLogin.Text;
+      FrmPrincipal.StatusBar1.Panels[0].Text := 'Usuário: ' + DataModule1.UsuarioLogado;
       ShowMessage(Format(MSG_BEM_VINDO, [NomeUsuarioLogado]));
       ModalResult := mrOk;
     end

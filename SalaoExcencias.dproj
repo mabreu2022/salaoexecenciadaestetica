@@ -127,14 +127,14 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="View\uView.Principal.pas">
-            <Form>Form1</Form>
+            <Form>FrmPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="View\uView.Login.pas">
             <Form>FrmLogin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Dao\uDm.pas">
+        <DCCReference Include="Dao\uDao.Dm.pas">
             <Form>DataModule1</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
