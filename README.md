@@ -1,5 +1,3 @@
-Claro, Mauricio! Aqui está um exemplo de conteúdo para o arquivo  do seu repositório SalaoExecenciaEstetica, com foco nas funcionalidades e propósito do sistema:
-
 💇‍♀️ Salão Excelência Estética
 Sistema de gerenciamento para salões de beleza e clínicas de estética, desenvolvido em Delphi 12.3 com banco de dados Firebird 5.0, seguindo o padrão de arquitetura MVC (Model-View-Controller).
 🚀 Funcionalidades Principais
