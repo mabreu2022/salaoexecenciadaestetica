@@ -35,6 +35,12 @@ Sistema de gerenciamento para salões de beleza e clínicas de estética, desenv
 • 	Arquitetura MVC
 
 📁 Estrutura de Pastas (sugerida)
+/Model
+/Controller
+/View
+/DAO
+/Utils
+
 
 👥 Desenvolvedor
 Projeto em desenvolvimento por Mauricio Abreu.
