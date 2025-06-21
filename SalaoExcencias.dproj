@@ -71,6 +71,7 @@
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
         <SanitizedProjectName>SalaoExcencias</SanitizedProjectName>
+        <Custom_Styles>&quot;Aqua Light Slate|VCLSTYLE|$(BDSCOMMONDIR)\Styles\AquaLightSlate.vsf&quot;</Custom_Styles>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>FireDACIBDriver;JvNet;vclwinx;DataSnapServer;fmx;vclie;DbxCommonDriver;bindengine;IndyIPCommon;VCLRESTComponents;DBXMSSQLDriver;FireDACCommonODBC;emsclient;appanalytics;IndyProtocols;vclx;Skia.Package.RTL;dbxcds;vcledge;Sysinfo;FmxTeeUI;ActyiveX;DBXFirebirdDriver;WizardCRUD;JvAppFrm;FireDACSqliteDriver;DbxClientDriver;JclVcl;soapmidas;TeeUI;Jcl;dbexpress;JvManagedThreads;Python;MVC_Wizard;inet;PythonVcl;vcltouch;RtmRxDB290;JvDB;TRscPix;FireDACDBXDriver;fmxdae;JvCustom;CustomIPTransport;FireDACMSSQLDriver;JvSystem;JvControls;C4DWizard;JvCrypt;madExcept_;JvJans;JvMM;IndySystem;BossExperts;JvGlobus;ibxbindings;JclContainers;JvPageComps;vclFireDAC;madDisAsm_;compAsaas;FireDACCommon;DataSnapServerMidas;FireDACODBCDriver;emsserverresource;DelphiAIDeveloper;bindcompdbx;rtl;FireDACMySQLDriver;DBXSqliteDriver;DBXSybaseASEDriver;pkitemmenuhelpdelphi;JvRuntimeDesign;JvXPCtrls;RtmRxCtl290;vclimg;DataSnapFireDAC;inetdbxpress;FireDAC;JvDocking;JvDlgs;xmlrtl;P4DEnvironment;ibxpress;dsnap;JvCmp;FireDACDb2Driver;DBXOracleDriver;DBXInformixDriver;vclib;fmxobj;bindcompvclsmp;DataSnapNativeClient;DatasnapConnectorsFreePascal;emshosting;FireDACCommonDriver;EstagiarioEletronico;IndyIPClient;bindcompvclwinx;emsedge;bindcompfmx;madBasic_;JvBands;inetdb;ibmonitor;FireDACASADriver;Tee;vclactnband;fmxFireDAC;FireDACInfxDriver;DBXMySQLDriver;VclSmp;DataSnapCommon;JvPascalInterpreter;fmxase;JvPluginSystem;DBXOdbcDriver;JvTimeFramework;dbrtl;FireDACOracleDriver;Skia.Package.FMX;ComPortDrv;TeeDB;FireDACMSAccDriver;DataSnapIndy10ServerTransport;JclDeveloperTools;Code4DWizardPK;DataSnapConnectors;vcldsnap;DBXInterBaseDriver;FireDACMongoDBDriver;JvWizards;FireDACTDataDriver;Skia.Package.VCL;vcldb;JvCore;bindcomp;inetstn;IndyCore;RESTBackendComponents;FireDACADSDriver;RaizeComponentsVclDb;RESTComponents;IndyIPServer;vcl;dsnapxml;adortl;dsnapcon;DataSnapClient;DataSnapProviderClient;JvDotNetCtrls;JvHMI;DBXDb2Driver;emsclientfiredac;FireDACPgDriver;FireDACDSDriver;JvPrintPreview;tethering;JvStdCtrls;bindcompvcl;CloudService;DBXSybaseASADriver;FMXTee;PythonFmx;soaprtl;RaizeComponentsVcl;soapserver;$(DCC_UsePackage)</DCC_UsePackage>
@@ -103,9 +104,10 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <DCC_UnitSearchPath>C:\FONTES\salaoexecencias\Core;C:\FONTES\salaoexecencias\Dao;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>C:\FONTES\salaoexecencias\Core;C:\FONTES\salaoexecencias\Dao;C:\FONTES\salaoexecencias\Controller;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <Icon_MainIcon>SalaoExcencias_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
@@ -139,6 +141,35 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="View\uView.CadastroDeClientes.pas">
+            <Form>FrmCadastroDeClientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Model\uModel.Cliente.pas"/>
+        <DCCReference Include="Controller\uController.Cliente.pas"/>
+        <DCCReference Include="Interfaces\uInterfaces.ClienteController.pas"/>
+        <DCCReference Include="View\uView.Configuracao.pas">
+            <Form>FrmConfiguracao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Model\uModel.Categoria.pas"/>
+        <DCCReference Include="Interfaces\uInterfaces.CategoriasController.pas"/>
+        <DCCReference Include="Interfaces\uInterfaces.FotoProcedimentoController.pas"/>
+        <DCCReference Include="Model\uModel.FotoProcedimento.pas"/>
+        <DCCReference Include="Interfaces\uInterfaces.ProcedimentoController.pas"/>
+        <DCCReference Include="Model\uModel.Procedimento.pas"/>
+        <DCCReference Include="Interfaces\uInterfaces.ServicoController.pas"/>
+        <DCCReference Include="Model\uModel.Servico.pas"/>
+        <DCCReference Include="Dao\uDAO.Cliente.pas"/>
+        <DCCReference Include="Dao\uDAO.Categoria.pas"/>
+        <DCCReference Include="Dao\uDAO.Servico.pas"/>
+        <DCCReference Include="Dao\uDAO.Procedimento.pas"/>
+        <DCCReference Include="View\uView.CadastroCategorias.pas">
+            <Form>FrmCadastroCategorias</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Controller\uController.Categoria.pas"/>
+        <DCCReference Include="Dao\uDAO.FotoProcedimento.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

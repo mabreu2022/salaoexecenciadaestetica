@@ -1,0 +1,278 @@
+unit uView.CadastroDeClientes;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.ExtCtrls,
+  Vcl.ComCtrls,
+  Vcl.StdCtrls,
+  Vcl.Buttons,
+  Data.DB,
+  Vcl.Grids,
+  Vcl.DBGrids,
+  uController.Cliente,
+  FireDAC.Stan.Param,
+  System.UITypes,
+  uModel.Cliente, Vcl.DBCtrls,
+  uInterfaces.ClienteController;
+
+type
+  TModoOperacao = (moNenhum, moNovo, moEditar);
+
+
+type
+  TFrmCadastroDeClientes = class(TForm)
+    Panel1: TPanel;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    btnSalvar: TBitBtn;
+    btnNovo: TBitBtn;
+    BitBtn1: TBitBtn;
+    btnApagar: TBitBtn;
+    edtNome: TEdit;
+    edtEndereco: TEdit;
+    lblNome: TLabel;
+    lblEndereco: TLabel;
+    btnFechar: TBitBtn;
+    DBGrid1: TDBGrid;
+    edtComplemento: TEdit;
+    lblComplemento: TLabel;
+    edtNumero: TEdit;
+    lblNumero: TLabel;
+    edtCEP: TEdit;
+    lblCEP: TLabel;
+    edtTelefone: TEdit;
+    lbltelefone: TLabel;
+    edtEmail: TEdit;
+    lblEmail: TLabel;
+    Panel2: TPanel;
+    Label3: TLabel;
+    Edit3: TEdit;
+    btnPesquisar: TBitBtn;
+    DBNavigator1: TDBNavigator;
+    procedure btnSalvarClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure btnApagarClick(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+
+    Controller: IClienteController;
+
+    procedure LimparCampos;
+    procedure HabilitarCampos(Ativo: Boolean);
+    procedure AtualizarGrid;
+    function RegistroSelecionado: Boolean;
+
+
+
+  public
+    { Public declarations }
+    procedure FDQueryClientesAfterScroll(DataSet: TDataSet);
+
+  end;
+
+var
+  FrmCadastroDeClientes: TFrmCadastroDeClientes;
+  ModoAtual: TModoOperacao;
+  IDSelecionado: Integer;
+
+
+implementation
+
+{$R *.dfm}
+
+uses uDao.Dm;
+
+procedure TFrmCadastroDeClientes.AtualizarGrid;
+begin
+  DataModule1.FDQueryClientes.Close;
+  DataModule1.FDQueryClientes.Open;
+end;
+
+procedure TFrmCadastroDeClientes.BitBtn1Click(Sender: TObject);
+begin
+  if not RegistroSelecionado then
+  begin
+    ShowMessage('Selecione um cliente para editar.');
+    Exit;
+  end;
+
+  ModoAtual := moEditar;
+  HabilitarCampos(True);
+end;
+
+procedure TFrmCadastroDeClientes.btnApagarClick(Sender: TObject);
+begin
+ if not RegistroSelecionado then
+  begin
+    ShowMessage('Selecione um cliente para apagar.');
+    Exit;
+  end;
+
+  if MessageDlg('Deseja realmente apagar este cliente?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  begin
+    // Chame o método do controller para excluir
+    Controller.ExcluirCliente(IDSelecionado);
+    AtualizarGrid;
+    ShowMessage('Cliente excluído com sucesso.');
+  end;
+
+end;
+
+procedure TFrmCadastroDeClientes.btnFecharClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFrmCadastroDeClientes.btnNovoClick(Sender: TObject);
+begin
+  ModoAtual := moNovo;
+  LimparCampos;
+  HabilitarCampos(True);
+  edtNome.SetFocus;
+end;
+
+procedure TFrmCadastroDeClientes.btnSalvarClick(Sender: TObject);
+var
+  Cliente: TCliente;
+begin
+  Cliente := TCliente.Create;
+  try
+    Cliente.Nome        := edtNome.Text;
+    Cliente.Telefone    := edtTelefone.Text;
+    Cliente.Email       := edtEmail.Text;
+    Cliente.Endereco    := edtEndereco.Text;
+    Cliente.Numero      := edtNumero.Text;
+    Cliente.Complemento := edtComplemento.Text;
+    Cliente.CEP         := edtCEP.Text;
+    // DataCadastro pode ser atribuído automaticamente no banco ou com:
+    // Cliente.DataCadastro := Date;
+
+    case ModoAtual of
+      moNovo:
+        Controller.InserirCliente(Cliente);
+      moEditar:
+        begin
+          Cliente.ID := IDSelecionado;
+          Controller.AtualizarCliente(Cliente);
+        end;
+    end;
+
+    ShowMessage('Cliente salvo com sucesso!');
+    AtualizarGrid;
+    HabilitarCampos(False);
+    ModoAtual := moNenhum;
+  finally
+    Cliente.Free;
+  end;
+
+
+end;
+
+procedure TFrmCadastroDeClientes.DBGrid1DblClick(Sender: TObject);
+begin
+   if DataModule1.FDQueryClientes.IsEmpty then
+    Exit;
+
+  // Captura o ID do cliente selecionado
+  IDSelecionado := DataModule1.FDQueryClientes.FieldByName('IDCLIENTE').AsInteger;
+
+  // Preenche os campos com os dados do cliente
+  edtNome.Text        := DataModule1.FDQueryClientes.FieldByName('NOME').AsString;
+  edtTelefone.Text    := DataModule1.FDQueryClientes.FieldByName('TELEFONE').AsString;
+  edtEmail.Text       := DataModule1.FDQueryClientes.FieldByName('EMAIL').AsString;
+  edtEndereco.Text    := DataModule1.FDQueryClientes.FieldByName('ENDERECO').AsString;
+  edtNumero.Text      := DataModule1.FDQueryClientes.FieldByName('NUMERO').AsString;
+  edtComplemento.Text := DataModule1.FDQueryClientes.FieldByName('COMPLEMENTO').AsString;
+  edtCEP.Text         := DataModule1.FDQueryClientes.FieldByName('CEP').AsString;
+
+  // Habilita os botões de edição, se necessário
+  HabilitarCampos(False);
+
+end;
+
+procedure TFrmCadastroDeClientes.FDQueryClientesAfterScroll(DataSet: TDataSet);
+begin
+  if DataModule1.FDQueryClientes.IsEmpty then Exit;
+
+  edtNome.Text        := DataModule1.FDQueryClientes.FieldByName('NOME').AsString;
+  edtTelefone.Text    := DataModule1.FDQueryClientes.FieldByName('TELEFONE').AsString;
+  edtEmail.Text       := DataModule1.FDQueryClientes.FieldByName('EMAIL').AsString;
+  edtEndereco.Text    := DataModule1.FDQueryClientes.FieldByName('ENDERECO').AsString;
+  edtNumero.Text      := DataModule1.FDQueryClientes.FieldByName('NUMERO').AsString;
+  edtComplemento.Text := DataModule1.FDQueryClientes.FieldByName('COMPLEMENTO').AsString;
+  edtCEP.Text         := DataModule1.FDQueryClientes.FieldByName('CEP').AsString;
+
+  IDSelecionado := DataModule1.FDQueryClientes.FieldByName('IDCLIENTE').AsInteger;
+
+end;
+
+procedure TFrmCadastroDeClientes.FormCreate(Sender: TObject);
+begin
+   Controller := TClienteController.Create;
+end;
+
+procedure TFrmCadastroDeClientes.FormShow(Sender: TObject);
+begin
+  DataModule1.FDQueryClientes.AfterScroll := Self.FDQueryClientesAfterScroll;
+
+  if not DataModule1.FDQueryClientes.IsEmpty then
+     FDQueryClientesAfterScroll(DataModule1.FDQueryClientes);
+
+   if DataModule1.FDQueryClientes.State in [dsInsert, dsEdit] then
+      DataModule1.FDQueryClientes.Cancel;
+
+  if not DataModule1.FDQueryClientes.Active then
+  begin
+    DataModule1.FDQueryClientes.Open;
+    DataModule1.FDQueryClientes.First;
+  end;
+  DataModule1.FDQueryClientes.AfterScroll := FDQueryClientesAfterScroll;
+end;
+
+procedure TFrmCadastroDeClientes.HabilitarCampos(Ativo: Boolean);
+begin
+  edtNome.Enabled        := Ativo;
+  edtTelefone.Enabled    := Ativo;
+  edtEmail.Enabled       := Ativo;
+  edtEndereco.Enabled    := Ativo;
+  edtNumero.Enabled      := Ativo;
+  edtComplemento.Enabled := Ativo;
+  edtCEP.Enabled         := Ativo;
+
+  btnSalvar.Enabled := Ativo;
+
+end;
+
+procedure TFrmCadastroDeClientes.LimparCampos;
+begin
+  edtNome.Clear;
+  edtTelefone.Clear;
+  edtEmail.Clear;
+  edtEndereco.Clear;
+  edtNumero.Clear;
+  edtComplemento.Clear;
+  edtCEP.Clear;
+end;
+
+function TFrmCadastroDeClientes.RegistroSelecionado: Boolean;
+begin
+  Result := not DataModule1.FDQueryClientes.IsEmpty;
+end;
+
+end.

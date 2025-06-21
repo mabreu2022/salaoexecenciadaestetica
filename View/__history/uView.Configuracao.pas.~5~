@@ -1,0 +1,41 @@
+unit uView.Configuracao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  TFrmConfiguracao = class(TForm)
+    edtServidor: TEdit;
+    edtPorta: TEdit;
+    edtDatabase: TEdit;
+    Edit4: TEdit;
+    edtSenha: TEdit;
+    edtCharSet: TEdit;
+    ChkPooloing: TCheckBox;
+    edtMAximoConexoes: TEdit;
+    Panel1: TPanel;
+    BitBtn1: TBitBtn;
+    lblServidor: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    lblMaximoConexoes: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmConfiguracao: TFrmConfiguracao;
+
+implementation
+
+{$R *.dfm}
+
+end.

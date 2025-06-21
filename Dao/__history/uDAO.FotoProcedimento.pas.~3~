@@ -1,0 +1,85 @@
+unit uDAO.FotoProcedimento;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, System.Generics.Collections,
+  uModel.FotoProcedimento, FireDAC.Comp.Client, Data.DB;
+
+type
+  TFotoProcedimentoDAO = class
+  public
+    procedure Inserir(AFoto: TFotoProcedimento);
+    procedure Excluir(AID: Integer);
+    function ListarPorProcedimento(AIDProcedimento: Integer): TObjectList<TFotoProcedimento>;
+  end;
+
+implementation
+
+uses
+  uDao.Dm;
+
+procedure TFotoProcedimentoDAO.Inserir(AFoto: TFotoProcedimento);
+begin
+  with TFDQuery.Create(nil) do
+  try
+    Connection := DataModule1.FDConnection;
+    SQL.Text := 'INSERT INTO FOTOSPROCEDIMENTO (IDPROCEDIMENTO, CAMINHOARQUIVO, IMAGEM, DATAINCLUSAO) ' +
+                'VALUES (:IDPROCEDIMENTO, :CAMINHOARQUIVO, :IMAGEM, :DATAINCLUSAO)';
+    ParamByName('IDPROCEDIMENTO').AsInteger := AFoto.IDPROCEDIMENTO;
+    ParamByName('CAMINHOARQUIVO').AsString := AFoto.CAMINHOARQUIVO;
+    ParamByName('IMAGEM').LoadFromStream(AFoto.IMAGEM, ftBlob);
+    ParamByName('DATAINCLUSAO').AsDateTime := AFoto.DATAINCLUSAO;
+    ExecSQL;
+  finally
+    Free;
+  end;
+end;
+
+procedure TFotoProcedimentoDAO.Excluir(AID: Integer);
+begin
+  with TFDQuery.Create(nil) do
+  try
+    Connection := DataModule1.FDConnection;
+    SQL.Text := 'DELETE FROM FOTOSPROCEDIMENTO WHERE IDFOTO = :ID';
+    ParamByName('ID').AsInteger := AID;
+    ExecSQL;
+  finally
+    Free;
+  end;
+end;
+
+function TFotoProcedimentoDAO.ListarPorProcedimento(AIDProcedimento: Integer): TObjectList<TFotoProcedimento>;
+var
+  Foto: TFotoProcedimento;
+begin
+  Result := TObjectList<TFotoProcedimento>.Create(True);
+  with TFDQuery.Create(nil) do
+  try
+    Connection := DataModule1.FDConnection;
+    SQL.Text := 'SELECT * FROM FOTOSPROCEDIMENTO WHERE IDPROCEDIMENTO = :ID ORDER BY DATAINCLUSAO DESC';
+    ParamByName('ID').AsInteger := AIDProcedimento;
+    Open;
+
+    while not Eof do
+    begin
+      Foto := TFotoProcedimento.Create;
+      Foto.IDFOTO := FieldByName('IDFOTO').AsInteger;
+      Foto.IDPROCEDIMENTO := FieldByName('IDPROCEDIMENTO').AsInteger;
+      Foto.CAMINHOARQUIVO := FieldByName('CAMINHOARQUIVO').AsString;
+      Foto.DATAINCLUSAO := FieldByName('DATAINCLUSAO').AsDateTime;
+
+      // Carregar imagem do blob
+      Foto.IMAGEM.Clear;
+      TBlobField(FieldByName('IMAGEM')).SaveToStream(Foto.IMAGEM);
+      Foto.IMAGEM.Position := 0;
+
+      Result.Add(Foto);
+      Next;
+    end;
+  finally
+    Free;
+  end;
+end;
+
+end.

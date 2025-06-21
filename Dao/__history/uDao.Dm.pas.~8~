@@ -1,0 +1,91 @@
+unit uDao.Dm;
+
+interface
+
+uses
+  System.SysUtils,
+  System.Classes,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Error,
+  FireDAC.UI.Intf,
+  FireDAC.Phys.Intf,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Stan.Async,
+  FireDAC.Phys,
+  FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef,
+  FireDAC.VCLUI.Wait,
+  FireDAC.Stan.Param,
+  FireDAC.DatS,
+  FireDAC.DApt.Intf,
+  FireDAC.DApt,
+  FireDAC.Comp.Client,
+  Data.DB,
+  FireDAC.Comp.DataSet,
+  FireDAC.Phys.IBBase,
+  uView.Principal,
+  IniFiles;
+
+type
+  TDataModule1 = class(TDataModule)
+    FDConnection1: TFDConnection;
+    FDPhysFBDriverLink1: TFDPhysFBDriverLink;
+    FDQueryClientes: TFDQuery;
+    FDQuery2: TFDQuery;
+    FDQuery3: TFDQuery;
+    FDQuery4: TFDQuery;
+    DSClientes: TDataSource;
+    DataSource2: TDataSource;
+    DataSource3: TDataSource;
+    DataSource4: TDataSource;
+    FDTransaction1: TFDTransaction;
+    procedure DataModuleCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    UsuarioLogado: string;
+  end;
+
+var
+  DataModule1: TDataModule1;
+ // UsuarioLogado: string;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+procedure TDataModule1.DataModuleCreate(Sender: TObject);
+var
+  Ini: TIniFile;
+  PathINI: string;
+begin
+  PathINI := ExtractFilePath(ParamStr(0)) + 'Config.ini';
+  Ini := TIniFile.Create(PathINI);
+  try
+    FDConnection1.Params.Clear;
+    FDConnection1.Params.Values['DriverID'] := Ini.ReadString('Database', 'DriverID', '');
+    FDConnection1.Params.Values['Protocol'] := Ini.ReadString('Database', 'Protocol', '');
+    FDConnection1.Params.Values['Server'] := Ini.ReadString('Database', 'Server', '');
+    FDConnection1.Params.Values['Port'] := Ini.ReadString('Database', 'Port', '');
+    FDConnection1.Params.Values['Database'] := Ini.ReadString('Database', 'Database', '');
+    FDConnection1.Params.Values['User_Name'] := Ini.ReadString('Database', 'User_Name', '');
+    FDConnection1.Params.Values['Password'] := Ini.ReadString('Database', 'Password', '');
+    FDConnection1.Params.Values['CharacterSet'] := Ini.ReadString('Database', 'CharacterSet', '');
+    FDConnection1.Params.Values['Pooled'] := Ini.ReadString('Database', 'Pooled', '');
+    FDConnection1.Params.Values['POOL_MaximumItems'] := Ini.ReadString('Database', 'POOL_MaximumItems', '');
+
+    FDConnection1.LoginPrompt := False;
+    FDConnection1.Connected := True;
+  finally
+    Ini.Free;
+  end;
+
+
+end;
+
+end.

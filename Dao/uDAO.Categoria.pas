@@ -1,0 +1,127 @@
+unit uDAO.Categoria;
+
+interface
+
+uses
+  System.SysUtils, System.Generics.Collections,
+  uModel.Categoria, FireDAC.Comp.Client, Data.DB;
+
+type
+  TCategoriaDAO = class
+  public
+    procedure Inserir(ACategoria: TCategoria);
+    procedure Atualizar(ACategoria: TCategoria);
+    procedure Excluir(AID: Integer);
+    function BuscarPorID(AID: Integer): TCategoria;
+    function ListarTodos(FiltroDescricao: string = ''): TObjectList<TCategoria>;
+
+  end;
+
+implementation
+
+uses
+  uDao.Dm;
+
+procedure TCategoriaDAO.Inserir(ACategoria: TCategoria);
+begin
+  with TFDQuery.Create(nil) do
+  try
+    Connection := DataModule1.FDConnection1;
+    SQL.Text := 'INSERT INTO CATEGORIAS (DESCRICAO) VALUES (:DESCRICAO)';
+    ParamByName('DESCRICAO').AsString := ACategoria.DESCRICAO;
+    ExecSQL;
+  finally
+    Free;
+  end;
+end;
+
+function TCategoriaDAO.ListarTodos(
+  FiltroDescricao: string): TObjectList<TCategoria>;
+var
+  SQLBase: string;
+  Cat: TCategoria;
+begin
+  Result := TObjectList<TCategoria>.Create(True);
+
+  with TFDQuery.Create(nil) do
+  try
+    Connection := DataModule1.FDConnection1;
+
+    SQLBase := 'SELECT IDCATEGORIA, DESCRICAO FROM CATEGORIAS';
+
+    if Trim(FiltroDescricao) <> '' then
+      SQLBase := SQLBase + ' WHERE UPPER(DESCRICAO) LIKE :FILTRO';
+
+    SQL.Text := SQLBase;
+
+    if Trim(FiltroDescricao) <> '' then
+      ParamByName('FILTRO').AsString := '%' + UpperCase(FiltroDescricao) + '%';
+
+    Open;
+
+    while not Eof do
+    begin
+      Cat := TCategoria.Create;
+      Cat.IDCATEGORIA := FieldByName('IDCATEGORIA').AsInteger;
+      Cat.DESCRICAO   := FieldByName('DESCRICAO').AsString;
+      Result.Add(Cat);
+      Next;
+    end;
+  finally
+    Free;
+  end;
+
+
+end;
+
+procedure TCategoriaDAO.Atualizar(ACategoria: TCategoria);
+begin
+  with TFDQuery.Create(nil) do
+  try
+    Connection := DataModule1.FDConnection1;
+    SQL.Text := 'UPDATE CATEGORIAS SET DESCRICAO = :DESCRICAO WHERE IDCATEGORIA = :ID';
+    ParamByName('DESCRICAO').AsString := ACategoria.DESCRICAO;
+    ParamByName('ID').AsInteger := ACategoria.IDCATEGORIA;
+    ExecSQL;
+  finally
+    Free;
+  end;
+end;
+
+procedure TCategoriaDAO.Excluir(AID: Integer);
+begin
+  with TFDQuery.Create(nil) do
+  try
+    Connection := DataModule1.FDConnection1;
+    SQL.Text := 'DELETE FROM CATEGORIAS WHERE IDCATEGORIA = :ID';
+    ParamByName('ID').AsInteger := AID;
+    ExecSQL;
+  finally
+    Free;
+  end;
+end;
+
+function TCategoriaDAO.BuscarPorID(AID: Integer): TCategoria;
+begin
+  Result := nil;
+  with TFDQuery.Create(nil) do
+  try
+    Connection := DataModule1.FDConnection1;
+    SQL.Text := 'SELECT * FROM CATEGORIAS WHERE IDCATEGORIA = :ID';
+    ParamByName('ID').AsInteger := AID;
+    Open;
+
+    if not IsEmpty then
+    begin
+      Result := TCategoria.Create;
+      Result.IDCATEGORIA := FieldByName('IDCATEGORIA').AsInteger;
+      Result.DESCRICAO   := FieldByName('DESCRICAO').AsString;
+    end;
+  finally
+    Free;
+  end;
+end;
+
+
+
+end.

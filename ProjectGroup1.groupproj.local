@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions/>
+  <Transactions>
+    <Transaction>2025/06/20 18:09:48.583,C:\FONTES\salaoexecencias\ProjectGroup1.groupproj=C:\Users\Mauricio Abreu\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj</Transaction>
+  </Transactions>
   <Default.Personality>
-    <Projects ActiveProject="C:\FONTES\calculadora precos minimos\CalculadoraPrecosMinimos.dproj"/>
+    <Projects ActiveProject="C:\FONTES\salaoexecencias\SalaoExcencias.dproj"/>
   </Default.Personality>
 </BorlandProject>

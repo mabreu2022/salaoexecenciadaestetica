@@ -557,9 +557,6 @@ object FrmPrincipal: TFrmPrincipal
       item
         Width = 50
       end>
-    ExplicitLeft = 232
-    ExplicitTop = 384
-    ExplicitWidth = 0
   end
   object MainMenu1: TMainMenu
     Left = 56
@@ -570,6 +567,7 @@ object FrmPrincipal: TFrmPrincipal
         Caption = 'Clientes'
         object Clientes2: TMenuItem
           Caption = 'Clientes'
+          OnClick = Clientes2Click
         end
         object Procedimentos1: TMenuItem
           Caption = 'Procedimentos'
@@ -582,6 +580,7 @@ object FrmPrincipal: TFrmPrincipal
         end
         object CategoriasdeServios1: TMenuItem
           Caption = 'Categorias de Servi'#231'os'
+          OnClick = CategoriasdeServios1Click
         end
       end
     end
