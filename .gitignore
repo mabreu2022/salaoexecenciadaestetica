@@ -1,0 +1,43 @@
+# Pastas de build
+Win32/
+Win64/
+Debug/
+Release/
+__history/
+__recovery/
+
+# Arquivos compilados
+*.dcu
+*.~*
+*.ddp
+*.cfg
+*.dcp
+*.dcpil
+*.identcache
+*.local
+*.rsm
+*.stat
+*.tvsconfig
+*.tvscc
+
+# Arquivos de log e temporários
+*.log
+*.tmp
+*.bak
+
+# Cache do IDE
+*.dsk
+*.dof
+*.dproj.local
+*.dproj.inherit.*
+
+# Arquivos de configuração da IDE
+*.identcache
+*.tvsconfig
+*.~*
+
+# MacOS
+.DS_Store
+
+# Git
+*.orig
