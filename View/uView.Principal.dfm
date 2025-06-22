@@ -555,6 +555,9 @@ object FrmPrincipal: TFrmPrincipal
     Height = 19
     Panels = <
       item
+        Width = 120
+      end
+      item
         Width = 50
       end>
   end
@@ -594,5 +597,10 @@ object FrmPrincipal: TFrmPrincipal
         Caption = 'Deslogar de :'
       end
     end
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 352
+    Top = 296
   end
 end

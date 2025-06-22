@@ -3,9 +3,21 @@ unit uView.Principal;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Imaging.jpeg,
-  Vcl.ExtCtrls, Vcl.Menus, uView.CadastroDeClientes;
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.ComCtrls,
+  Vcl.Imaging.jpeg,
+  Vcl.ExtCtrls,
+  Vcl.Menus,
+  uView.CadastroDeClientes,
+  DateUtils;
 
 type
   TFrmPrincipal = class(TForm)
@@ -22,8 +34,10 @@ type
     Clientes2: TMenuItem;
     Procedimentos1: TMenuItem;
     Deslogarde1: TMenuItem;
+    Timer1: TTimer;
     procedure Clientes2Click(Sender: TObject);
     procedure CategoriasdeServios1Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,7 +51,7 @@ implementation
 
 {$R *.dfm}
 
-uses uView.CadastroCategorias;
+uses uView.CadastroCategorias, uDao.Dm;
 
 procedure TFrmPrincipal.CategoriasdeServios1Click(Sender: TObject);
 begin
@@ -57,6 +71,22 @@ begin
   finally
     FrmCadastroDeClientes.Free;
   end;
+end;
+
+procedure TFrmPrincipal.Timer1Timer(Sender: TObject);
+var
+  Saudacao: string;
+begin
+  case HourOf(Now) of
+    0..11: Saudacao := 'Bom dia';
+    12..17: Saudacao := 'Boa tarde';
+    else Saudacao := 'Boa noite';
+  end;
+
+  StatusBar1.Panels[0].Text := Saudacao + ', ' + DataModule1.UsuarioLogado;
+
+  StatusBar1.Panels[1].Text := FormatDateTime('ddd, dd "de" mmmm hh:nn:ss', Now);
+
 end;
 
 end.

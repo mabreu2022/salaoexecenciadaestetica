@@ -3,8 +3,12 @@ unit uDAO.Procedimento;
 interface
 
 uses
-  System.SysUtils, System.Generics.Collections,
-  uModel.Procedimento, FireDAC.Comp.Client, Data.DB;
+  System.SysUtils,
+  System.Generics.Collections,
+  uModel.Procedimento,
+  FireDAC.Comp.Client,
+  Data.DB,
+  FireDAC.Stan.Param;
 
 type
   TProcedimentoDAO = class
@@ -14,6 +18,7 @@ type
     procedure Excluir(AID: Integer);
     function BuscarPorID(AID: Integer): TProcedimento;
     function ListarPorCliente(AIDCliente: Integer): TObjectList<TProcedimento>;
+    function ListarTodos(FiltroDescricao: string = ''): TObjectList<TProcedimento>;
   end;
 
 implementation
@@ -123,6 +128,47 @@ begin
     end;
   finally
     Free;
+  end;
+end;
+
+function TProcedimentoDAO.ListarTodos(FiltroDescricao: string): TObjectList<TProcedimento>;
+var
+  P: TProcedimento;
+  Q: TFDQuery;
+begin
+  Result := TObjectList<TProcedimento>.Create(True);
+
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := DataModule1.FDConnection1;
+
+    // Monta SQL com ou sem filtro
+    Q.SQL.Text := 'SELECT * FROM PROCEDIMENTOS';
+    if FiltroDescricao <> '' then
+      Q.SQL.Add('WHERE LOWER(OBSERVACOES) LIKE :FILTRO');
+
+    Q.SQL.Add('ORDER BY DATAHORA DESC');
+
+    // Aplica parâmetro, se houver
+    if FiltroDescricao <> '' then
+      Q.ParamByName('FILTRO').AsString := '%' + LowerCase(FiltroDescricao) + '%';
+
+    Q.Open;
+
+    while not Q.Eof do
+    begin
+      P := TProcedimento.Create;
+      P.IDPROCEDIMENTO := Q.FieldByName('IDPROCEDIMENTO').AsInteger;
+      P.IDCLIENTE := Q.FieldByName('IDCLIENTE').AsInteger;
+      P.IDSERVICO := Q.FieldByName('IDSERVICO').AsInteger;
+      P.DATAHORA := Q.FieldByName('DATAHORA').AsDateTime;
+      P.OBSERVACOES.WriteString(Q.FieldByName('OBSERVACOES').AsString);
+      P.CONCLUIDO := Q.FieldByName('CONCLUIDO').AsBoolean;
+      Result.Add(P);
+      Q.Next;
+    end;
+  finally
+    Q.Free;
   end;
 end;
 

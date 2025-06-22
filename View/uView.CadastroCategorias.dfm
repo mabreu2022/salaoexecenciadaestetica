@@ -20,7 +20,6 @@ object FrmCadastroCategorias: TFrmCadastroCategorias
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 400
     object btnSalvar: TBitBtn
       Left = 266
       Top = 9
@@ -261,10 +260,9 @@ object FrmCadastroCategorias: TFrmCadastroCategorias
     Top = 0
     Width = 841
     Height = 367
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
     TabOrder = 1
-    ExplicitHeight = 400
     object TabSheet1: TTabSheet
       Caption = 'Cadastro'
       object lblDescricao: TLabel
@@ -292,7 +290,6 @@ object FrmCadastroCategorias: TFrmCadastroCategorias
         Height = 289
         Align = alClient
         TabOrder = 0
-        ExplicitHeight = 322
         object grdCategorias: TDBGrid
           Left = 1
           Top = 1

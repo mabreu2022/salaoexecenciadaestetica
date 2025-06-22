@@ -13,7 +13,7 @@ type
     procedure Atualizar(AServico: TServico);
     procedure Excluir(AID: Integer);
     function BuscarPorID(AID: Integer): TServico;
-    function ListarTodos: TObjectList<TServico>;
+    function ListarTodos(FiltroDescricao: string = ''): TObjectList<TServico>;
   end;
 
 implementation
@@ -99,31 +99,48 @@ begin
   end;
 end;
 
-function TServicoDAO.ListarTodos: TObjectList<TServico>;
+function TServicoDAO.ListarTodos(FiltroDescricao: string = ''): TObjectList<TServico>;
 var
   S: TServico;
+  Q: TFDQuery;
 begin
   Result := TObjectList<TServico>.Create(True);
-  with TFDQuery.Create(nil) do
-  try
-    Connection := DataModule1.FDConnection1;
-    SQL.Text := 'SELECT * FROM SERVICOS ORDER BY NOME';
-    Open;
 
-    while not Eof do
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := DataModule1.FDConnection1;
+
+    // Monta SQL com filtro opcional
+    Q.SQL.Text := 'SELECT * FROM SERVICOS';
+
+    if FiltroDescricao <> '' then
+      Q.SQL.Add('WHERE LOWER(NOME) LIKE :FILTRO');
+
+    Q.SQL.Add('ORDER BY NOME');
+
+    // Define parâmetro, se necessário
+    if FiltroDescricao <> '' then
+      Q.ParamByName('FILTRO').AsString := '%' + LowerCase(FiltroDescricao) + '%';
+
+    Q.Open;
+
+    // Preenche a lista com os resultados
+    while not Q.Eof do
     begin
       S := TServico.Create;
-      S.IDSERVICO := FieldByName('IDSERVICO').AsInteger;
-      S.NOME := FieldByName('NOME').AsString;
-      S.PRECO := FieldByName('PRECO').AsFloat;
-      S.DURACAOMINUTOS := FieldByName('DURACAOMINUTOS').AsInteger;
-      S.IDCATEGORIA := FieldByName('IDCATEGORIA').AsInteger;
+      S.IDSERVICO       := Q.FieldByName('IDSERVICO').AsInteger;
+      S.NOME            := Q.FieldByName('NOME').AsString;
+      S.PRECO           := Q.FieldByName('PRECO').AsFloat;
+      S.DURACAOMINUTOS  := Q.FieldByName('DURACAOMINUTOS').AsInteger;
+      S.IDCATEGORIA     := Q.FieldByName('IDCATEGORIA').AsInteger;
+
       Result.Add(S);
-      Next;
+      Q.Next;
     end;
   finally
-    Free;
+    Q.Free;
   end;
 end;
+
 
 end.

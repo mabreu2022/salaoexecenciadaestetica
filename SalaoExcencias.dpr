@@ -26,7 +26,10 @@ uses
   uDAO.Procedimento in 'Dao\uDAO.Procedimento.pas',
   uView.CadastroCategorias in 'View\uView.CadastroCategorias.pas' {FrmCadastroCategorias},
   uController.Categoria in 'Controller\uController.Categoria.pas',
-  uDAO.FotoProcedimento in 'Dao\uDAO.FotoProcedimento.pas';
+  uDAO.FotoProcedimento in 'Dao\uDAO.FotoProcedimento.pas',
+  uView.CadastroDeServicos in 'View\uView.CadastroDeServicos.pas' {FrmCadastrodeServicos},
+  uController.Servico in 'Controller\uController.Servico.pas',
+  uController.Procedimento in 'Controller\uController.Procedimento.pas';
 
 //  Vcl.Themes,
 //  Vcl.Styles;
@@ -43,6 +46,7 @@ begin
   Application.CreateForm(TFrmCadastroDeClientes, FrmCadastroDeClientes);
   Application.CreateForm(TFrmConfiguracao, FrmConfiguracao);
   Application.CreateForm(TFrmCadastroCategorias, FrmCadastroCategorias);
+  Application.CreateForm(TFrmCadastrodeServicos, FrmCadastrodeServicos);
   // Cria manualmente a tela de login e exibe como modal
   FrmLogin := TFrmLogin.Create(nil);
   try

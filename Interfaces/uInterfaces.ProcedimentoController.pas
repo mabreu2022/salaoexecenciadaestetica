@@ -12,6 +12,7 @@ type
     procedure Atualizar(AProcedimento: TProcedimento);
     procedure Excluir(ID: Integer);
     function BuscarPorID(ID: Integer): TProcedimento;
+    function ListarTodos(FiltroDescricao: string = ''): TArray<TProcedimento>;
   end;
 
 implementation

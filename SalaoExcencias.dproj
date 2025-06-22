@@ -170,6 +170,12 @@
         </DCCReference>
         <DCCReference Include="Controller\uController.Categoria.pas"/>
         <DCCReference Include="Dao\uDAO.FotoProcedimento.pas"/>
+        <DCCReference Include="View\uView.CadastroDeServicos.pas">
+            <Form>FrmCadastrodeServicos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Controller\uController.Servico.pas"/>
+        <DCCReference Include="Controller\uController.Procedimento.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

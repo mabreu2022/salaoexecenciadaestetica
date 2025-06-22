@@ -1,0 +1,147 @@
+unit uView.CadastroDeServicos;
+
+interface
+
+uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.ComCtrls,
+  Vcl.Buttons,
+  Vcl.DBCtrls,
+  Vcl.StdCtrls,
+  Vcl.ExtCtrls,
+  Data.DB,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error,
+  FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf,
+  Vcl.Mask,
+  FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,
+  Vcl.Samples.Spin,
+  Vcl.Grids,
+  Vcl.DBGrids,
+  uModel.Categoria,
+  uInterfaces.CategoriasController,
+  uController.Categoria;
+
+type
+  TFrmCadastrodeServicos = class(TForm)
+    PageControl1: TPageControl;
+    pnlBotoes: TPanel;
+    btnSalvar: TBitBtn;
+    btnNovo: TBitBtn;
+    BitBtn1: TBitBtn;
+    btnApagar: TBitBtn;
+    btnFechar: TBitBtn;
+    DBNavigator1: TDBNavigator;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    pnlTopo: TPanel;
+    Label3: TLabel;
+    edtPesquisa: TEdit;
+    btnPesquisar: TBitBtn;
+    DBGrid1: TDBGrid;
+    edtNome: TEdit;
+    SpinEdit1: TSpinEdit;
+    cbCategoria: TDBLookupComboBox;
+    mtServicos: TFDMemTable;
+    mtCategorias: TFDMemTable;
+    edtPreco: TMaskEdit;
+    dsCategorias: TDataSource;
+    dsServicos: TDataSource;
+    procedure FormShow(Sender: TObject);
+    procedure btnPesquisarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmCadastrodeServicos: TFrmCadastrodeServicos;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmCadastrodeServicos.btnPesquisarClick(Sender: TObject);
+var
+  Controller: IServicoController;
+  Lista: TArray<TServico>;
+  Servico: TServico;
+begin
+  mtServicos.Close;
+  mtServicos.FieldDefs.Clear;
+  mtServicos.FieldDefs.Add('IDSERVICO', ftInteger);
+  mtServicos.FieldDefs.Add('NOME', ftString, 100);
+  mtServicos.FieldDefs.Add('PRECO', ftCurrency);
+  mtServicos.FieldDefs.Add('DURACAOMINUTOS', ftInteger);
+  mtServicos.FieldDefs.Add('IDCATEGORIA', ftInteger);
+  mtServicos.CreateDataSet;
+
+  Controller := TServicoController.Create;
+  Lista := Controller.ListarTodos(edtPesquisa.Text.Trim);
+
+  for Servico in Lista do
+  begin
+    mtServicos.Append;
+    mtServicos.FieldByName('IDSERVICO').AsInteger := Servico.IDSERVICO;
+    mtServicos.FieldByName('NOME').AsString := Servico.NOME;
+    mtServicos.FieldByName('PRECO').AsCurrency := Servico.PRECO;
+    mtServicos.FieldByName('DURACAOMINUTOS').AsInteger := Servico.DURACAOMINUTOS;
+    mtServicos.FieldByName('IDCATEGORIA').AsInteger := Servico.IDCATEGORIA;
+    mtServicos.Post;
+  end;
+
+
+end;
+
+procedure TFrmCadastrodeServicos.FormShow(Sender: TObject);
+var
+  ControllerCat: ICategoriaController;
+  ListaCat: TArray<TCategoria>;
+  Cat: TCategoria;
+begin
+  // Configura mtCategorias
+  mtCategorias.Close;
+  mtCategorias.FieldDefs.Clear;
+  mtCategorias.FieldDefs.Add('IDCATEGORIA', ftInteger);
+  mtCategorias.FieldDefs.Add('DESCRICAO', ftString, 100);
+  mtCategorias.CreateDataSet;
+
+  // Preenche categorias
+  ControllerCat := TCategoriaController.Create;
+  ListaCat := ControllerCat.ListarTodos;
+
+  for Cat in ListaCat do
+  begin
+    mtCategorias.Append;
+    mtCategorias.FieldByName('IDCATEGORIA').AsInteger := Cat.IDCATEGORIA;
+    mtCategorias.FieldByName('DESCRICAO').AsString := Cat.DESCRICAO;
+    mtCategorias.Post;
+  end;
+
+  // Configura mtServicos
+  mtServicos.Close;
+  mtServicos.FieldDefs.Clear;
+  mtServicos.FieldDefs.Add('IDSERVICO', ftInteger);
+  mtServicos.FieldDefs.Add('NOME', ftString, 100);
+  mtServicos.FieldDefs.Add('PRECO', ftCurrency);
+  mtServicos.FieldDefs.Add('DURACAOMINUTOS', ftInteger);
+  mtServicos.FieldDefs.Add('IDCATEGORIA', ftInteger);
+  mtServicos.CreateDataSet;
+
+end;
+
+end.

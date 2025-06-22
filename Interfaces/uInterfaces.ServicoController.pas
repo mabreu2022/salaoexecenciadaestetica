@@ -11,7 +11,7 @@ type
     procedure Inserir(AServico: TServico);
     procedure Atualizar(AServico: TServico);
     procedure Excluir(ID: Integer);
-    function ListarTodos: TArray<TServico>;
+    function ListarTodos(FiltroDescricao: string = ''): TArray<TServico>;
   end;
 
 implementation
