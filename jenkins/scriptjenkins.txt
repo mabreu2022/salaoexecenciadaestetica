@@ -1,0 +1,61 @@
+@echo off
+setlocal
+
+echo Iniciando compilacao...
+cd /d "%WORKSPACE%"
+
+dir "%WORKSPACE%\Infraestrutura"
+echo -----------------------------
+
+dcc32 ^
+  -U"C:\Program Files (x86)\Embarcadero\Studio\23.0\lib\win32\debug" ^
+  -I"C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\common" ^
+  -I"%WORKSPACE%\Infraestrutura" ^
+  SalaoExcencias.dpr
+
+if errorlevel 1 (
+    echo ERRO: Falha na compilacao!
+    exit /b 1
+)
+
+REM ===============================
+REM Gera tag automatica com data/hora
+REM ===============================
+for /f %%i in ('powershell -command "Get-Date -Format yyyyMMdd-HHmmss"') do set TAG=v1.0.0-%%i
+
+REM Dados do release
+set GITHUB_TOKEN=%github-token%
+set REPO=mabreu2022/salaoexecenciadaestetica
+set RELEASE_NAME=Versao %TAG%
+set EXEC_PATH=SalaoExcencias.exe
+
+echo Publicando release %TAG% no GitHub...
+
+curl -X POST https://api.github.com/repos/%REPO%/releases ^
+  -H "Authorization: token %GITHUB_TOKEN%" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"tag_name\":\"%TAG%\",\"name\":\"%RELEASE_NAME%\",\"generate_release_notes\":true,\"draft\":false,\"prerelease\":false}" ^
+  -o response.json
+
+echo Conteudo de response.json:
+type response.json
+echo -----------------------------
+
+REM Extrai upload_url com segurança via PowerShell
+for /f %%u in ('powershell -Command "(Get-Content response.json | ConvertFrom-Json).upload_url -replace '{.*}',''"') do set "UPLOAD_URL=%%u?name=SalaoExcencias.exe"
+
+echo URL de upload extraida: %UPLOAD_URL%
+
+REM Verifica existencia do executavel
+if not exist "%EXEC_PATH%" (
+    echo ERRO: Executavel nao encontrado!
+    exit /b 1
+)
+
+curl -X POST "%UPLOAD_URL%" ^
+  -H "Authorization: token %GITHUB_TOKEN%" ^
+  -H "Content-Type: application/octet-stream" ^
+  --data-binary "@%EXEC_PATH%"
+
+echo ✅ Release publicado com sucesso com changelog automatico na tag %TAG%!
+endlocal
