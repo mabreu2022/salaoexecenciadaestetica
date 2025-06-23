@@ -26,7 +26,7 @@ uses
   FireDAC.Comp.DataSet,
   FireDAC.Phys.IBBase,
   uView.Principal,
-  IniFiles;
+  System.IniFiles;
 
 
 type
