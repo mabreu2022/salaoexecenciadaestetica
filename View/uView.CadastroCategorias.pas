@@ -67,7 +67,7 @@ type
     procedure btnFecharClick(Sender: TObject);
   private
     { Private declarations }
-    FCategoria: TCategoria;
+
     FCodigoSelecionado: Integer;
     procedure LimparCampos;
     procedure PreencherGrid;
