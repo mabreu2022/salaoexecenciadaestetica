@@ -17,7 +17,7 @@ uses
   Vcl.ExtCtrls,
   Vcl.Menus,
   uView.CadastroDeClientes,
-  DateUtils;
+  System.DateUtils;
 
 type
   TFrmPrincipal = class(TForm)
