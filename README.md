@@ -41,6 +41,16 @@ Sistema de gerenciamento para salões de beleza e clínicas de estética, desenv
 /DAO
 /Utils
 
+Tipos de pesquisa disponíveis
+- Por nome do cliente
+→ Digitar no edtPesquisar busca por trechos do nome (ex: "mar" encontra "Mauricio").
+- Por data do procedimento
+→ Usando dtInicial e dtFinal, você pode restringir o intervalo de busca (ex: de 01/06 a 23/06).
+- Por categoria do serviço (tipo)
+→ Selecionando no cbCategoria, você pode ver apenas fotos de procedimentos da categoria "Estética", "Clínica", "Odonto", etc.
+- Combinação de critérios
+→ O usuário pode buscar, por exemplo, todos os procedimentos da categoria “Clínica” feitos por clientes com nome “Ana” entre duas datas.
+
 
 👥 Desenvolvedor
 Projeto em desenvolvimento por Mauricio Abreu.
