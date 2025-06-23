@@ -3,8 +3,12 @@ unit uDAO.Servico;
 interface
 
 uses
-  System.SysUtils, System.Generics.Collections,
-  uModel.Servico, FireDAC.Comp.Client, Data.DB;
+  System.SysUtils,
+  System.Generics.Collections,
+  uModel.Servico,
+  FireDAC.Comp.Client,
+  Data.DB,
+  FireDAC.Stan.Param;
 
 type
   TServicoDAO = class

@@ -3,8 +3,12 @@ unit uDAO.Cliente;
 interface
 
 uses
-  System.SysUtils, System.Generics.Collections,
-  uModel.Cliente, FireDAC.Comp.Client, Data.DB;
+  System.SysUtils,
+  System.Generics.Collections,
+  uModel.Cliente,
+  FireDAC.Comp.Client,
+  Data.DB,
+  FireDAC.Stan.Param;
 
 type
   TClienteDAO = class

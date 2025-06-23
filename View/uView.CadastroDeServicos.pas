@@ -36,7 +36,8 @@ uses
   uController.Categoria,
   uController.Servico,
   uModel.Servico,
-  uInterfaces.ServicoController;
+  uInterfaces.ServicoController,
+  System.UITypes;
 
 type
   TFrmCadastrodeServicos = class(TForm)

@@ -73,7 +73,6 @@ object FrmCadastrodeServicos: TFrmCadastrodeServicos
         Height = 48
         Align = alTop
         TabOrder = 0
-        ExplicitTop = 8
         object Label3: TLabel
           Left = 8
           Top = 1
@@ -158,9 +157,6 @@ object FrmCadastrodeServicos: TFrmCadastrodeServicos
     Height = 41
     Align = alBottom
     TabOrder = 1
-    ExplicitLeft = -217
-    ExplicitTop = 367
-    ExplicitWidth = 841
     object btnSalvar: TBitBtn
       Left = 266
       Top = 9
