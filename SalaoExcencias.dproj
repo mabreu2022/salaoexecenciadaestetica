@@ -176,6 +176,15 @@
         </DCCReference>
         <DCCReference Include="Controller\uController.Servico.pas"/>
         <DCCReference Include="Controller\uController.Procedimento.pas"/>
+        <DCCReference Include="View\uView.FotoProcedimento.pas">
+            <Form>FrmFotoProcedimento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Controller\uController.FotoProcedimento.pas"/>
+        <DCCReference Include="View\uView.FotoAmpliada.pas">
+            <Form>FrmFotoAmpliada</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

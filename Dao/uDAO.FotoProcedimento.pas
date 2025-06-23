@@ -3,8 +3,14 @@ unit uDAO.FotoProcedimento;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Generics.Collections,
-  uModel.FotoProcedimento, FireDAC.Comp.Client, Data.DB;
+  System.SysUtils,
+  System.Classes,
+  System.Generics.Collections,
+  uModel.FotoProcedimento,
+  FireDAC.Comp.Client,
+  Data.DB,
+  uModel.Procedimento,
+  FireDAC.Stan.Param;
 
 type
   TFotoProcedimentoDAO = class
@@ -12,6 +18,7 @@ type
     procedure Inserir(AFoto: TFotoProcedimento);
     procedure Excluir(AID: Integer);
     function ListarPorProcedimento(AIDProcedimento: Integer): TObjectList<TFotoProcedimento>;
+    function ListarPorCliente(AIDCliente: Integer): TObjectList<TProcedimento>;
   end;
 
 implementation
@@ -47,6 +54,40 @@ begin
   finally
     Free;
   end;
+end;
+
+function TFotoProcedimentoDAO.ListarPorCliente(
+  AIDCliente: Integer): TObjectList<TProcedimento>;
+var
+  P: TProcedimento;
+  Q: TFDQuery;
+begin
+  Result := TObjectList<TProcedimento>.Create(True); // OwnsObjects = True
+
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := DataModule1.FDConnection1;
+    Q.SQL.Text := 'SELECT * FROM PROCEDIMENTOS WHERE IDCLIENTE = :ID ORDER BY DATAHORA DESC';
+    Q.ParamByName('ID').AsInteger := AIDCliente;
+    Q.Open;
+
+    while not Q.Eof do
+    begin
+      P := TProcedimento.Create;
+      P.IDPROCEDIMENTO := Q.FieldByName('IDPROCEDIMENTO').AsInteger;
+      P.IDCLIENTE := Q.FieldByName('IDCLIENTE').AsInteger;
+      P.IDSERVICO := Q.FieldByName('IDSERVICO').AsInteger;
+      P.DATAHORA := Q.FieldByName('DATAHORA').AsDateTime;
+      P.OBSERVACOES.WriteString(Q.FieldByName('OBSERVACOES').AsString);
+      P.CONCLUIDO := Q.FieldByName('CONCLUIDO').AsBoolean;
+      Result.Add(P);
+      Q.Next;
+    end;
+  finally
+    Q.Free;
+  end;
+
+
 end;
 
 function TFotoProcedimentoDAO.ListarPorProcedimento(AIDProcedimento: Integer): TObjectList<TFotoProcedimento>;
