@@ -128,9 +128,6 @@ object FrmConfiguracao: TFrmConfiguracao
     Height = 41
     Align = alBottom
     TabOrder = 8
-    ExplicitLeft = 104
-    ExplicitTop = 392
-    ExplicitWidth = 185
     object BitBtn1: TBitBtn
       Left = 266
       Top = 8

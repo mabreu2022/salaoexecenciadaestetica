@@ -15,7 +15,7 @@ uses
   Vcl.StdCtrls,
   Vcl.Buttons,
   Vcl.ExtCtrls,
-  Inifiles,
+  System.Inifiles,
   uDao.Dm,
   System.Hash;
 
