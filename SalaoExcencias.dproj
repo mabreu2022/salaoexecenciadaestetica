@@ -186,6 +186,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Infraestrutura\uSessao.pas"/>
+        <DCCReference Include="Core\uConstantes.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

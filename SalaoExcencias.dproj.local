@@ -71,8 +71,9 @@
     <Transaction>2025/06/23 06:21:30.000.589,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 06:22:02.000.401,C:\FONTES\salaoexecencias\Controller\uController.FotoProcedimento.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 08:50:05.000.796,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/23 08:50:29.000.371,C:\FONTES\salaoexecencias\View\uView.FotoAmpliada.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 08:50:29.000.371,C:\FONTES\salaoexecencias\View\uView.FotoAmpliada.dfm=C:\FONTES\salaoexecencias\Unit1.dfm</Transaction>
+    <Transaction>2025/06/23 08:50:29.000.371,C:\FONTES\salaoexecencias\View\uView.FotoAmpliada.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 12:22:21.377,=C:\FONTES\salaoexecencias\Infraestrutura\uSessao.pas</Transaction>
+    <Transaction>2025/06/23 12:25:47.449,=C:\FONTES\salaoexecencias\Core\uConstantes.pas</Transaction>
   </Transactions>
 </BorlandProject>
