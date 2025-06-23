@@ -47,6 +47,11 @@ implementation
 
 {$R *.dfm}
 
+//var
+//  IDUsuarioLogado: Integer = 0;
+//  NomeUsuarioLogado: string = '';
+
+
 procedure TFrmLogin.BtnLoginClick(Sender: TObject);
 var
   FDQ: TFDQuery;

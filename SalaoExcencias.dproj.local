@@ -52,26 +52,27 @@
     <Transaction>2025/06/21 19:21:40.000.934,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/21 19:22:03.000.197,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\Dao\uDAO.Procedimento.pas</Transaction>
     <Transaction>2025/06/21 19:29:40.000.008,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/21 19:31:00.000.794,C:\FONTES\salaoexecencias\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.CadastroCategorias.dfm</Transaction>
     <Transaction>2025/06/21 19:31:00.000.794,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.CadastroCategorias.pas</Transaction>
+    <Transaction>2025/06/21 19:31:00.000.794,C:\FONTES\salaoexecencias\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.CadastroCategorias.dfm</Transaction>
     <Transaction>2025/06/21 19:37:18.000.649,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/21 19:37:56.000.170,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\Controller\uController.Categoria.pas</Transaction>
     <Transaction>2025/06/21 19:43:54.000.428,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/21 19:44:06.000.557,C:\FONTES\salaoexecencias\Dao\uDAO.FotoProcedimento.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/22 10:31:15.000.685,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/22 10:34:47.000.512,C:\FONTES\salaoexecencias\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.CadastroDeServicos.dfm</Transaction>
     <Transaction>2025/06/22 10:34:47.000.512,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.CadastroDeServicos.pas</Transaction>
+    <Transaction>2025/06/22 10:34:47.000.512,C:\FONTES\salaoexecencias\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.CadastroDeServicos.dfm</Transaction>
     <Transaction>2025/06/22 10:49:42.000.699,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/22 10:50:11.000.385,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\Controller\uController.Servico.pas</Transaction>
     <Transaction>2025/06/22 11:13:47.000.873,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/22 11:16:49.000.370,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\Controller\uController.Procedimento.pas</Transaction>
     <Transaction>2025/06/23 06:20:01.000.856,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/23 06:20:47.000.739,C:\FONTES\salaoexecencias\View\uView.FotoProcedimento.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 06:20:47.000.739,C:\FONTES\salaoexecencias\View\uView.FotoProcedimento.dfm=C:\FONTES\salaoexecencias\Unit1.dfm</Transaction>
+    <Transaction>2025/06/23 06:20:47.000.739,C:\FONTES\salaoexecencias\View\uView.FotoProcedimento.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 06:21:30.000.589,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 06:22:02.000.401,C:\FONTES\salaoexecencias\Controller\uController.FotoProcedimento.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 08:50:05.000.796,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/23 08:50:29.000.371,C:\FONTES\salaoexecencias\View\uView.FotoAmpliada.dfm=C:\FONTES\salaoexecencias\Unit1.dfm</Transaction>
     <Transaction>2025/06/23 08:50:29.000.371,C:\FONTES\salaoexecencias\View\uView.FotoAmpliada.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
+    <Transaction>2025/06/23 08:50:29.000.371,C:\FONTES\salaoexecencias\View\uView.FotoAmpliada.dfm=C:\FONTES\salaoexecencias\Unit1.dfm</Transaction>
+    <Transaction>2025/06/23 12:22:21.377,=C:\FONTES\salaoexecencias\Infraestrutura\uSessao.pas</Transaction>
   </Transactions>
 </BorlandProject>

@@ -32,7 +32,8 @@ uses
   uController.Procedimento in 'Controller\uController.Procedimento.pas',
   uView.FotoProcedimento in 'View\uView.FotoProcedimento.pas' {FrmFotoProcedimento},
   uController.FotoProcedimento in 'Controller\uController.FotoProcedimento.pas',
-  uView.FotoAmpliada in 'View\uView.FotoAmpliada.pas' {FrmFotoAmpliada};
+  uView.FotoAmpliada in 'View\uView.FotoAmpliada.pas' {FrmFotoAmpliada},
+  uSessao in 'Infraestrutura\uSessao.pas';
 
 //  Vcl.Themes,
 //  Vcl.Styles;
