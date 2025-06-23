@@ -31,7 +31,8 @@ uses
   FireDAC.Comp.Client,
   uModel.Categoria,
   uInterfaces.CategoriasController,
-  uController.Categoria;
+  uController.Categoria,
+  System.UITypes;
 
 type
   TFrmCadastroCategorias = class(TForm)
