@@ -95,10 +95,30 @@ object DataModule1: TDataModule1
         Value = Null
       end>
   end
-  object FDQuery4: TFDQuery
+  object QryFotosProcedimento: TFDQuery
     Connection = FDConnection1
+    SQL.Strings = (
+      'SELECT'
+      '  IDFOTO,'
+      '  IDPROCEDIMENTO,'
+      '  CAMINHOARQUIVO,'
+      '  IMAGEM,'
+      '  DATAINCLUSAO'
+      'FROM'
+      '  FOTOSPROCEDIMENTO'
+      'WHERE'
+      '  IDPROCEDIMENTO = :IDPROCEDIMENTO'
+      'ORDER BY'
+      '  DATAINCLUSAO DESC;')
     Left = 88
     Top = 368
+    ParamData = <
+      item
+        Name = 'IDPROCEDIMENTO'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
   end
   object DSClientes: TDataSource
     DataSet = FDQueryClientes
@@ -115,7 +135,8 @@ object DataModule1: TDataModule1
     Left = 216
     Top = 296
   end
-  object DataSource4: TDataSource
+  object dsFotosProcedimento: TDataSource
+    DataSet = QryFotosProcedimento
     Left = 216
     Top = 368
   end

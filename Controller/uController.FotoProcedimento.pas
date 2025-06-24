@@ -9,7 +9,8 @@ uses
   System.Generics.Collections,
   Data.DB,
   System.SysUtils,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client,
+  FireDAC.Stan.Param;
 
 type
   TFotoProcedimentoController = class(TInterfacedObject, IFotoProcedimentoController)
@@ -53,6 +54,7 @@ begin
   FDataSource := TDataSource.Create(nil);
   FDataSource.DataSet := FQuery;
 
+
 end;
 
 destructor TFotoProcedimentoController.Destroy;
@@ -71,10 +73,10 @@ begin
   if AIDProcedimento <= 0 then
     raise Exception.Create('Procedimento inválido. Selecione um procedimento antes de continuar.');
 
-  qryFotos.Append;
-  qryFotos.FieldByName('IDPROCEDIMENTO').AsInteger := AIDProcedimento;
-  qryFotos.FieldByName('DATAINCLUSAO').AsDateTime := Now;
-  qryFotos.Post;
+  DataModule1.QryFotosProcedimento.Append;
+  DataModule1.QryFotosProcedimento.FieldByName('IDPROCEDIMENTO').AsInteger := AIDProcedimento;
+  DataModule1.QryFotosProcedimento.FieldByName('DATAINCLUSAO').AsDateTime := Now;
+  DataModule1.QryFotosProcedimento.Post;
 
 end;
 

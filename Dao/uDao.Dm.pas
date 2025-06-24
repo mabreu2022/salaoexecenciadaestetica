@@ -36,11 +36,11 @@ type
     FDQueryClientes: TFDQuery;
     FDQqueryFotoProcedimento: TFDQuery;
     qryProcedimentos: TFDQuery;
-    FDQuery4: TFDQuery;
+    QryFotosProcedimento: TFDQuery;
     DSClientes: TDataSource;
     dsFotoProcedimento: TDataSource;
     dsProcedimentos: TDataSource;
-    DataSource4: TDataSource;
+    dsFotosProcedimento: TDataSource;
     FDTransaction1: TFDTransaction;
     procedure DataModuleCreate(Sender: TObject);
   private
