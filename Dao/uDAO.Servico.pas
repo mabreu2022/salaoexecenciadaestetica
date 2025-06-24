@@ -27,6 +27,7 @@ uses
 
 procedure TServicoDAO.Inserir(AServico: TServico);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -43,10 +44,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 procedure TServicoDAO.Atualizar(AServico: TServico);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -64,10 +67,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 procedure TServicoDAO.Excluir(AID: Integer);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -77,10 +82,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TServicoDAO.BuscarPorID(AID: Integer): TServico;
 begin
+
   Result := nil;
   with TFDQuery.Create(nil) do
   try
@@ -101,6 +108,7 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TServicoDAO.ListarTodos(FiltroDescricao: string = ''): TObjectList<TServico>;
@@ -108,13 +116,13 @@ var
   S: TServico;
   Q: TFDQuery;
 begin
+
   Result := TObjectList<TServico>.Create(True);
 
   Q := TFDQuery.Create(nil);
   try
     Q.Connection := DataModule1.FDConnection1;
 
-    // Monta SQL com filtro opcional
     Q.SQL.Text := 'SELECT * FROM SERVICOS';
 
     if FiltroDescricao <> '' then
@@ -122,13 +130,11 @@ begin
 
     Q.SQL.Add('ORDER BY NOME');
 
-    // Define parâmetro, se necessário
     if FiltroDescricao <> '' then
       Q.ParamByName('FILTRO').AsString := '%' + LowerCase(FiltroDescricao) + '%';
 
     Q.Open;
 
-    // Preenche a lista com os resultados
     while not Q.Eof do
     begin
       S := TServico.Create;
@@ -144,7 +150,7 @@ begin
   finally
     Q.Free;
   end;
-end;
 
+end;
 
 end.

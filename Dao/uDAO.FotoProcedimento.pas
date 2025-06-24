@@ -28,6 +28,7 @@ uses
 
 procedure TFotoProcedimentoDAO.Inserir(AFoto: TFotoProcedimento);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -41,10 +42,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 procedure TFotoProcedimentoDAO.Excluir(AID: Integer);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -54,6 +57,7 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TFotoProcedimentoDAO.ListarPorCliente(
@@ -62,7 +66,8 @@ var
   P: TProcedimento;
   Q: TFDQuery;
 begin
-  Result := TObjectList<TProcedimento>.Create(True); // OwnsObjects = True
+
+  Result := TObjectList<TProcedimento>.Create(True);
 
   Q := TFDQuery.Create(nil);
   try
@@ -87,13 +92,13 @@ begin
     Q.Free;
   end;
 
-
 end;
 
 function TFotoProcedimentoDAO.ListarPorProcedimento(AIDProcedimento: Integer): TObjectList<TFotoProcedimento>;
 var
   Foto: TFotoProcedimento;
 begin
+
   Result := TObjectList<TFotoProcedimento>.Create(True);
   with TFDQuery.Create(nil) do
   try
@@ -110,7 +115,6 @@ begin
       Foto.CAMINHOARQUIVO := FieldByName('CAMINHOARQUIVO').AsString;
       Foto.DATAINCLUSAO := FieldByName('DATAINCLUSAO').AsDateTime;
 
-      // Carregar imagem do blob
       Foto.IMAGEM.Clear;
       TBlobField(FieldByName('IMAGEM')).SaveToStream(Foto.IMAGEM);
       Foto.IMAGEM.Position := 0;
@@ -121,6 +125,7 @@ begin
   finally
     Free;
   end;
+
 end;
 
 end.

@@ -12,7 +12,6 @@ type
     procedure Atualizar(ACategoria: TCategoria);
     procedure Excluir(ID: Integer);
     function BuscarPorID(ID: Integer): TCategoria;
-    //function ListarTodos: TArray<TCategoria>; // ← Adicionado aqui
     function ListarTodos(FiltroDescricao: string = ''): TArray<TCategoria>;
   end;
 

@@ -17,7 +17,7 @@ object FrmCadastrodeServicos: TFrmCadastrodeServicos
     Top = 0
     Width = 624
     Height = 400
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Cadastro'

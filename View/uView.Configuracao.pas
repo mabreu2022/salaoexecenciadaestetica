@@ -76,7 +76,6 @@ begin
     Ini.Free;
   end;
 
-
 end;
 
 procedure TFrmConfiguracao.FormShow(Sender: TObject);
@@ -104,7 +103,6 @@ begin
   finally
     Ini.Free;
   end;
-
 
 end;
 

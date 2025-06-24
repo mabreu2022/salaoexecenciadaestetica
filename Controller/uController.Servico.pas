@@ -53,7 +53,8 @@ begin
   FDAO.Excluir(ID);
 end;
 
-function TServicoController.ListarTodos(FiltroDescricao: string): TArray<TServico>;
+function TServicoController.ListarTodos(FiltroDescricao: string):
+TArray<TServico>;
 begin
   Result := FDAO.ListarTodos(FiltroDescricao).ToArray;
 end;

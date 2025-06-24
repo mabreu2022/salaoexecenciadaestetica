@@ -12,11 +12,14 @@ uses
   Vcl.Controls,
   Vcl.Forms,
   Vcl.Dialogs,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons;
 
 type
   TFrmFotoAmpliada = class(TForm)
     Image1: TImage;
+    Panel1: TPanel;
+    btnFechar: TBitBtn;
+    procedure btnFecharClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,6 +36,11 @@ implementation
 {$R *.dfm}
 
 { TFrmFotoAmpliada }
+
+procedure TFrmFotoAmpliada.btnFecharClick(Sender: TObject);
+begin
+  Close;
+end;
 
 class procedure TFrmFotoAmpliada.ExibirImagem(const Imagem: TPicture);
 var

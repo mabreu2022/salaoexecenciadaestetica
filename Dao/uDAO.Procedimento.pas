@@ -28,6 +28,7 @@ uses
 
 procedure TProcedimentoDAO.Inserir(AProc: TProcedimento);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -42,10 +43,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 procedure TProcedimentoDAO.Atualizar(AProc: TProcedimento);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -62,10 +65,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 procedure TProcedimentoDAO.Excluir(AID: Integer);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -75,10 +80,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TProcedimentoDAO.BuscarPorID(AID: Integer): TProcedimento;
 begin
+
   Result := nil;
   with TFDQuery.Create(nil) do
   try
@@ -100,12 +107,14 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TProcedimentoDAO.ListarPorCliente(AIDCliente: Integer): TObjectList<TProcedimento>;
 var
   P: TProcedimento;
 begin
+
   Result := TObjectList<TProcedimento>.Create(True);
   with TFDQuery.Create(nil) do
   try
@@ -129,6 +138,7 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TProcedimentoDAO.ListarTodos(FiltroDescricao: string): TObjectList<TProcedimento>;
@@ -136,20 +146,19 @@ var
   P: TProcedimento;
   Q: TFDQuery;
 begin
+
   Result := TObjectList<TProcedimento>.Create(True);
 
   Q := TFDQuery.Create(nil);
   try
     Q.Connection := DataModule1.FDConnection1;
 
-    // Monta SQL com ou sem filtro
     Q.SQL.Text := 'SELECT * FROM PROCEDIMENTOS';
     if FiltroDescricao <> '' then
       Q.SQL.Add('WHERE LOWER(OBSERVACOES) LIKE :FILTRO');
 
     Q.SQL.Add('ORDER BY DATAHORA DESC');
 
-    // Aplica parâmetro, se houver
     if FiltroDescricao <> '' then
       Q.ParamByName('FILTRO').AsString := '%' + LowerCase(FiltroDescricao) + '%';
 
@@ -170,6 +179,7 @@ begin
   finally
     Q.Free;
   end;
+
 end;
 
 end.

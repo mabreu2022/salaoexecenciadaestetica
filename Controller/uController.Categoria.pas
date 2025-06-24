@@ -3,7 +3,9 @@ unit uController.Categoria;
 interface
 
 uses
-  uModel.Categoria, uDAO.Categoria, uInterfaces.CategoriasController;
+  uModel.Categoria,
+  uDAO.Categoria,
+  uInterfaces.CategoriasController;
 
 type
   TCategoriaController = class(TInterfacedObject, ICategoriaController)
@@ -60,7 +62,5 @@ function TCategoriaController.BuscarPorID(ID: Integer): TCategoria;
 begin
   Result := FCategoriaDAO.BuscarPorID(ID);
 end;
-
-
 
 end.

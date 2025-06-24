@@ -258,7 +258,7 @@ object FrmFotoProcedimento: TFrmFotoProcedimento
     Top = 0
     Width = 839
     Height = 400
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
     object TabSheet1: TTabSheet
@@ -312,6 +312,7 @@ object FrmFotoProcedimento: TFrmFotoProcedimento
           ListSource = dsProcedimentos
           TabOrder = 1
           OnCloseUp = cbProcedimentoCloseUp
+          OnEnter = cbProcedimentoEnter
         end
       end
       object pnlBotoesDasFotos: TPanel

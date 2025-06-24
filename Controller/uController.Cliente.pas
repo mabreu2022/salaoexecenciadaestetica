@@ -16,14 +16,14 @@ type
   public
     procedure InserirCliente(ACliente: TCliente);
     procedure AtualizarCliente(ACliente: TCliente);
-    procedure ExcluirCliente(AID: Integer); // 👈 novo método
+    procedure ExcluirCliente(AID: Integer);
 
   end;
 
 implementation
 
 uses
-  uDao.Dm; // seu DataModule com FDConnection
+  uDao.Dm;
 
 { TClienteController }
 
@@ -47,6 +47,7 @@ procedure TClienteController.InserirCliente(ACliente: TCliente);
 var
   Qry: TFDQuery;
 begin
+
   Qry := TFDQuery.Create(nil);
   try
     Qry.Connection := DataModule1.FDConnection1;
@@ -67,12 +68,14 @@ begin
   finally
     Qry.Free;
   end;
+
 end;
 
 procedure TClienteController.AtualizarCliente(ACliente: TCliente);
 var
   Qry: TFDQuery;
 begin
+
   Qry := TFDQuery.Create(nil);
   try
     Qry.Connection := DataModule1.FDConnection1;
@@ -95,6 +98,7 @@ begin
   finally
     Qry.Free;
   end;
+
 end;
 
 end.

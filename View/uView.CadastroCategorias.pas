@@ -69,6 +69,7 @@ type
     { Private declarations }
 
     FCodigoSelecionado: Integer;
+
     procedure LimparCampos;
     procedure PreencherGrid;
     procedure PreencherCamposDaSelecao;
@@ -101,6 +102,7 @@ procedure TFrmCadastroCategorias.btnApagarClick(Sender: TObject);
 var
   Controller: ICategoriaController;
 begin
+
   if FCodigoSelecionado = 0 then Exit;
 
   if MessageDlg('Deseja excluir esta categoria?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
@@ -130,9 +132,10 @@ var
   Cat: TCategoria;
   Filtro: string;
 begin
+
   Filtro := Trim(edtPesquisa.Text);
   Controller := TCategoriaController.Create;
-  Lista := Controller.ListarTodos(Filtro); // ← busca filtrada
+  Lista := Controller.ListarTodos(Filtro);
 
   ConfigurarCamposMemTable;
 
@@ -153,7 +156,8 @@ var
   Controller: ICategoriaController;
   Categoria: TCategoria;
 begin
-  Controller := TCategoriaController.Create; // ou via Factory, se tiver
+
+  Controller := TCategoriaController.Create;
   Categoria := TCategoria.Create;
   try
     Categoria.DESCRICAO := edtDescricao.Text;
@@ -177,7 +181,8 @@ end;
 
 procedure TFrmCadastroCategorias.ConfigurarCamposMemTable;
 begin
-   mtCategorias.Close;
+
+  mtCategorias.Close;
   mtCategorias.FieldDefs.Clear;
 
   mtCategorias.FieldDefs.Add('IDCATEGORIA', ftInteger);
@@ -196,12 +201,7 @@ end;
 
 procedure TFrmCadastroCategorias.grdCategoriasCellClick(Column: TColumn);
 begin
-//  if not mtCategorias.IsEmpty then
-//  begin
-//    FCodigoSelecionado := mtCategorias.FieldByName('IDCATEGORIA').AsInteger;
-//    edtDescricao.Text := mtCategorias.FieldByName('DESCRICAO').AsString;
-//  end;
-    PreencherCamposDaSelecao;
+  PreencherCamposDaSelecao;
 end;
 
 procedure TFrmCadastroCategorias.grdCategoriasDblClick(Sender: TObject);
@@ -213,7 +213,12 @@ procedure TFrmCadastroCategorias.LimparCampos;
 begin
   edtDescricao.Clear;
   FCodigoSelecionado := 0;
-  edtDescricao.SetFocus;
+
+  if edtDescricao.CanFocus then
+    edtDescricao.SetFocus;
+
+  PageControl1.ActivePage := TabSheet1;
+
 end;
 
 procedure TFrmCadastroCategorias.PreencherCamposDaSelecao;
@@ -231,6 +236,7 @@ var
   Lista: TArray<TCategoria>;
   Cat: TCategoria;
 begin
+
   Controller := TCategoriaController.Create;
   Lista := Controller.ListarTodos;
 
@@ -248,8 +254,6 @@ begin
     mtCategorias.FieldByName('DESCRICAO').AsString := Cat.DESCRICAO;
     mtCategorias.Post;
   end;
-
-
 
 end;
 

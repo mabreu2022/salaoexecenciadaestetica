@@ -106,6 +106,7 @@ var
   ID: Integer;
   Controller: IServicoController;
 begin
+
   if mtServicos.IsEmpty then
   begin
     ShowMessage('Nenhum serviço selecionado para excluir.');
@@ -118,7 +119,7 @@ begin
     Controller := TServicoController.Create;
     Controller.Excluir(ID);
     ShowMessage('Serviço excluído com sucesso.');
-    btnPesquisarClick(nil); // Atualiza a lista
+    btnPesquisarClick(nil);
   end;
 
 end;
@@ -141,6 +142,7 @@ var
   Lista: TArray<TServico>;
   Servico: TServico;
 begin
+
   mtServicos.Close;
   mtServicos.FieldDefs.Clear;
   mtServicos.FieldDefs.Add('IDSERVICO', ftInteger);
@@ -172,7 +174,7 @@ var
   Servico: TServico;
   Controller: IServicoController;
 begin
-  // Validação simples
+
   if Trim(edtNome.Text) = '' then
   begin
     ShowMessage('Informe o nome do serviço.');
@@ -194,7 +196,6 @@ begin
     Exit;
   end;
 
-  // Cria e preenche a entidade
   Servico := TServico.Create;
   Controller := TServicoController.Create;
   try
@@ -236,14 +237,13 @@ var
   ListaCat: TArray<TCategoria>;
   Cat: TCategoria;
 begin
-  // Configura mtCategorias
+
   mtCategorias.Close;
   mtCategorias.FieldDefs.Clear;
   mtCategorias.FieldDefs.Add('IDCATEGORIA', ftInteger);
   mtCategorias.FieldDefs.Add('DESCRICAO', ftString, 100);
   mtCategorias.CreateDataSet;
 
-  // Preenche categorias
   ControllerCat := TCategoriaController.Create;
   ListaCat := ControllerCat.ListarTodos;
 
@@ -255,7 +255,6 @@ begin
     mtCategorias.Post;
   end;
 
-  // Configura mtServicos
   mtServicos.Close;
   mtServicos.FieldDefs.Clear;
   mtServicos.FieldDefs.Add('IDSERVICO', ftInteger);
@@ -264,6 +263,8 @@ begin
   mtServicos.FieldDefs.Add('DURACAOMINUTOS', ftInteger);
   mtServicos.FieldDefs.Add('IDCATEGORIA', ftInteger);
   mtServicos.CreateDataSet;
+
+  PageControl1.ActivePage := TabSheet1;
 
 end;
 

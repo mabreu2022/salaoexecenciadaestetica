@@ -28,6 +28,7 @@ uses
 
 procedure TCategoriaDAO.Inserir(ACategoria: TCategoria);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -37,6 +38,7 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TCategoriaDAO.ListarTodos(
@@ -45,6 +47,7 @@ var
   SQLBase: string;
   Cat: TCategoria;
 begin
+
   Result := TObjectList<TCategoria>.Create(True);
 
   with TFDQuery.Create(nil) do
@@ -75,11 +78,11 @@ begin
     Free;
   end;
 
-
 end;
 
 procedure TCategoriaDAO.Atualizar(ACategoria: TCategoria);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -90,10 +93,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 procedure TCategoriaDAO.Excluir(AID: Integer);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -103,10 +108,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TCategoriaDAO.BuscarPorID(AID: Integer): TCategoria;
 begin
+
   Result := nil;
   with TFDQuery.Create(nil) do
   try
@@ -124,8 +131,7 @@ begin
   finally
     Free;
   end;
+
 end;
-
-
 
 end.

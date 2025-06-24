@@ -23,10 +23,11 @@ type
 implementation
 
 uses
-  uDao.Dm; // onde está FDConnection e FDQueryClientes
+  uDao.Dm;
 
 procedure TClienteDAO.Inserir(ACliente: TCliente);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -43,10 +44,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 procedure TClienteDAO.Atualizar(ACliente: TCliente);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -65,10 +68,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 procedure TClienteDAO.Excluir(AID: Integer);
 begin
+
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
@@ -78,10 +83,12 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TClienteDAO.BuscarPorID(AID: Integer): TCliente;
 begin
+
   Result := nil;
   with TFDQuery.Create(nil) do
   try
@@ -105,12 +112,14 @@ begin
   finally
     Free;
   end;
+
 end;
 
 function TClienteDAO.ListarTodos: TObjectList<TCliente>;
 var
   Cliente: TCliente;
 begin
+
   Result := TObjectList<TCliente>.Create(True);
   with TFDQuery.Create(nil) do
   try
@@ -135,6 +144,7 @@ begin
   finally
     Free;
   end;
+
 end;
 
 end.

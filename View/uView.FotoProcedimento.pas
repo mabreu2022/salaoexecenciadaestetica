@@ -96,6 +96,7 @@ type
     procedure dbgPesquisarMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
     procedure dbgPesquisarMouseLeave(Sender: TObject);
+    procedure cbProcedimentoEnter(Sender: TObject);
   private
     { Private declarations }
     ControllerFoto: IFotoProcedimentoController;
@@ -178,15 +179,18 @@ end;
 
 procedure TFrmFotoProcedimento.btnNovoClick(Sender: TObject);
 begin
-  if VarIsNull(cbProcedimento.KeyValue) then
+ if (not Assigned(cbProcedimento.ListSource)) or
+     (cbProcedimento.ListSource.DataSet.IsEmpty) or
+     VarIsNull(cbProcedimento.KeyValue) then
   begin
-    ShowMessage('Por favor, selecione um procedimento antes de adicionar uma nova foto.');
+    ShowMessage('Selecione um procedimento válido antes de adicionar uma foto.');
     Exit;
   end;
 
   qryFotos.Append;
   qryFotos.FieldByName('IDPROCEDIMENTO').AsInteger := cbProcedimento.KeyValue;
   qryFotos.FieldByName('DATAINCLUSAO').AsDateTime := Now;
+
 
 end;
 
@@ -196,18 +200,15 @@ var
 begin
   qryPesquisa.Close;
 
-  // 🔤 Filtro de nome do cliente ou observações
   FiltroTexto := Trim(edtPesquisar.Text);
   if FiltroTexto = '' then
     qryPesquisa.ParamByName('FILTRO').Clear
   else
     qryPesquisa.ParamByName('FILTRO').AsString := '%' + FiltroTexto + '%';
 
-  // 🗓️ Intervalo de datas (de...até 23:59:59 do dia final)
   qryPesquisa.ParamByName('DATAINI').AsDateTime := dtInicial.Date;
   qryPesquisa.ParamByName('DATAFIM').AsDateTime := dtFinal.Date + EncodeTime(23, 59, 59, 999);
 
-  // 🏷️ Filtro por categoria, opcional
   if VarIsNull(cbCategoria.KeyValue) then
     qryPesquisa.ParamByName('IDCATEGORIA').Clear
   else
@@ -221,7 +222,7 @@ procedure TFrmFotoProcedimento.btnSalvarClick(Sender: TObject);
 var
   Foto: TFotoProcedimento;
 begin
-  // Validações essenciais
+
   if VarIsNull(cbCliente.KeyValue) then
   begin
     ShowMessage('Selecione um cliente.');
@@ -243,8 +244,8 @@ begin
     Foto.DATAINCLUSAO := Now;
     Foto.CarregarImagemDeArquivo(OpenPictureDialog1.FileName);
 
-    ControllerFoto.Inserir(Foto);           // Salva no banco via DAO
-    AdicionarMiniatura(Foto);              // Mostra no FlowPanel
+    ControllerFoto.Inserir(Foto);
+    AdicionarMiniatura(Foto);
     ShowMessage('📸 Foto salva com sucesso!');
   finally
     Foto.Free;
@@ -284,11 +285,11 @@ end;
 
 procedure TFrmFotoProcedimento.cbclienteCloseUp(Sender: TObject);
 begin
- // Garante que um cliente válido foi selecionado
+
   if not VarIsNull(cbCliente.KeyValue) then
   begin
     QryProcedimentos.Close;
-    cbProcedimento.KeyValue := Null; // limpa seleção anterior
+    cbProcedimento.KeyValue := Null;
 
     QryProcedimentos.SQL.Text :=
       'SELECT P.IDPROCEDIMENTO, S.NOME AS NOMESERVICO ' +
@@ -300,11 +301,9 @@ begin
     QryProcedimentos.ParamByName('IDCLIENTE').AsInteger := cbCliente.KeyValue;
     QryProcedimentos.Open;
 
-    // Limpa imagens anteriores
     QryFotos.Close;
     FlowPanel1.DestroyComponents;
 
-    // Mostra aviso se o cliente não tiver procedimentos ativos
     if QryProcedimentos.IsEmpty then
     begin
       ShowMessage('Este cliente não possui procedimentos ativos.');
@@ -331,6 +330,27 @@ begin
 
 end;
 
+procedure TFrmFotoProcedimento.cbProcedimentoEnter(Sender: TObject);
+begin
+  if not Assigned(cbProcedimento.ListSource) then
+    Exit;
+
+  if cbProcedimento.ListSource.DataSet.IsEmpty then
+  begin
+    if MessageDlg(
+      'Este cliente não possui procedimentos cadastrados.' + sLineBreak +
+      'Deseja criar um novo agora?',
+      mtInformation, [mbYes, mbNo], 0
+    ) = mrYes then
+    begin
+      btnNovoClick(sender);
+    end;
+
+    Abort;
+  end;
+
+end;
+
 procedure TFrmFotoProcedimento.dbgPesquisarDrawColumnCell(Sender: TObject;
   const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
 const
@@ -345,11 +365,9 @@ begin
   Grid := Sender as TDBGrid;
   RecNo := Grid.DataSource.DataSet.RecNo;
 
-  // Calcula a posição vertical da linha
   LinhaAtualTop := Rect.Top;
   LinhaAtualBottom := Rect.Bottom;
 
-  // Verifica se o mouse está dentro da altura da célula
   EstaLinhaEhHover := (FMouseY >= LinhaAtualTop) and (FMouseY < LinhaAtualBottom);
 
   if gdSelected in State then
@@ -399,23 +417,18 @@ begin
   FHoveredRow := -1;
   FMouseY := -1;
 
-  // Instancia o Controller
   ControllerFoto := TFotoProcedimentoController.Create;
 
-  // Abre a query real com os dados da tabela CATEGORIAS
   qryCategorias.Open;
 
-  // Prepara estrutura do TFDMemTable para usar como fonte do cbCategoria
   memCategorias.Close;
   memCategorias.FieldDefs.Clear;
   memCategorias.FieldDefs.Add('IDCATEGORIA', ftInteger);
   memCategorias.FieldDefs.Add('DESCRICAO', ftString, 100);
   memCategorias.CreateDataSet;
 
-  // Adiciona a opção "Todas as categorias"
   memCategorias.AppendRecord([Null, '(Todas as categorias)']);
 
-  // Copia as categorias reais da qryCategorias para o memCategorias
   qryCategorias.First;
   while not qryCategorias.Eof do
   begin
@@ -428,14 +441,11 @@ begin
 
   memCategorias.First;
 
-  // Configura a combo para usar a nova fonte combinada
   cbCategoria.ListSource := dsMemCategorias;
   cbCategoria.KeyField := 'IDCATEGORIA';
   cbCategoria.ListField := 'DESCRICAO';
 
-//  QryProcedimentos.Open;
   QryClientes.Open;
-
 
 end;
 

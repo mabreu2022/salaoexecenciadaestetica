@@ -20,8 +20,8 @@ uses
   FireDAC.Comp.Client,
   uDao.Dm,
   System.Hash,
-  FireDAC.Stan.Param, // para TFDParam.SetAsString
-  Data.DB,            // para TDataSet.IsEmpty
+  FireDAC.Stan.Param,
+  Data.DB,
   uConstantes, uView.Principal;
 
 type
@@ -47,10 +47,6 @@ implementation
 
 {$R *.dfm}
 
-//var
-//  IDUsuarioLogado: Integer = 0;
-//  NomeUsuarioLogado: string = '';
-
 
 procedure TFrmLogin.BtnLoginClick(Sender: TObject);
 var
@@ -71,7 +67,6 @@ begin
     Exit;
   end;
 
-  // 🔐 Gerar o hash da senha digitada
   SenhaHash := GerarHashSHA256(edtSenha.Text);
 
   FDQ := TFDQuery.Create(nil);

@@ -52,7 +52,6 @@ type
 
 var
   DataModule1: TDataModule1;
- // UsuarioLogado: string;
 
 implementation
 
@@ -71,18 +70,18 @@ begin
   Ini := TIniFile.Create(PathINI);
   Params := TStringList.Create;
   try
-    // Lê parâmetros do INI
-    DefName := 'FB_Pooled'; // nome que daremos à definição de conexão
 
-    Params.Values['DriverID'] := Ini.ReadString('Database', 'DriverID', 'FB');
-    Params.Values['Protocol'] := Ini.ReadString('Database', 'Protocol', 'TCPIP');
-    Params.Values['Server'] := Ini.ReadString('Database', 'Server', 'localhost');
-    Params.Values['Port'] := Ini.ReadString('Database', 'Port', '3050');
-    Params.Values['Database'] := Ini.ReadString('Database', 'Database', '');
-    Params.Values['User_Name'] := Ini.ReadString('Database', 'User_Name', '');
-    Params.Values['Password'] := Ini.ReadString('Database', 'Password', '');
-    Params.Values['CharacterSet'] := Ini.ReadString('Database', 'CharacterSet', 'UTF8');
-    Params.Values['Pooled'] := Ini.ReadString('Database', 'Pooled', 'True');
+    DefName := 'FB_Pooled';
+
+    Params.Values['DriverID']          := Ini.ReadString('Database', 'DriverID', 'FB');
+    Params.Values['Protocol']          := Ini.ReadString('Database', 'Protocol', 'TCPIP');
+    Params.Values['Server']            := Ini.ReadString('Database', 'Server', 'localhost');
+    Params.Values['Port']              := Ini.ReadString('Database', 'Port', '3050');
+    Params.Values['Database']          := Ini.ReadString('Database', 'Database', '');
+    Params.Values['User_Name']         := Ini.ReadString('Database', 'User_Name', '');
+    Params.Values['Password']          := Ini.ReadString('Database', 'Password', '');
+    Params.Values['CharacterSet']      := Ini.ReadString('Database', 'CharacterSet', 'UTF8');
+    Params.Values['Pooled']            := Ini.ReadString('Database', 'Pooled', 'True');
     Params.Values['POOL_MaximumItems'] := Ini.ReadString('Database', 'POOL_MaximumItems', '10');
 
    oDef := FDManager.ConnectionDefs.FindConnectionDef(DefName);
@@ -90,20 +89,17 @@ begin
      oDef.Delete;
 
 
-    // Registra uma nova definição com pooling ativado
     FDManager.AddConnectionDef(DefName, 'FB', Params);
 
-    // Aponta para a definição registrada
     FDConnection1.Params.Clear;
     FDConnection1.ConnectionDefName := DefName;
     FDConnection1.LoginPrompt := False;
     FDConnection1.Connected := True;
+
   finally
     Params.Free;
     Ini.Free;
   end;
-
-
 
 end;
 

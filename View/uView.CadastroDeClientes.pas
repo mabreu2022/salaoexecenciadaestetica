@@ -28,7 +28,6 @@ uses
 type
   TModoOperacao = (moNenhum, moNovo, moEditar);
 
-
 type
   TFrmCadastroDeClientes = class(TForm)
     Panel1: TPanel;
@@ -118,6 +117,7 @@ end;
 
 procedure TFrmCadastroDeClientes.btnApagarClick(Sender: TObject);
 begin
+
  if not RegistroSelecionado then
   begin
     ShowMessage('Selecione um cliente para apagar.');
@@ -126,7 +126,6 @@ begin
 
   if MessageDlg('Deseja realmente apagar este cliente?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
   begin
-    // Chame o método do controller para excluir
     Controller.ExcluirCliente(IDSelecionado);
     AtualizarGrid;
     ShowMessage('Cliente excluído com sucesso.');
@@ -160,8 +159,6 @@ begin
     Cliente.Numero      := edtNumero.Text;
     Cliente.Complemento := edtComplemento.Text;
     Cliente.CEP         := edtCEP.Text;
-    // DataCadastro pode ser atribuído automaticamente no banco ou com:
-    // Cliente.DataCadastro := Date;
 
     case ModoAtual of
       moNovo:
@@ -189,10 +186,8 @@ begin
    if DataModule1.FDQueryClientes.IsEmpty then
     Exit;
 
-  // Captura o ID do cliente selecionado
   IDSelecionado := DataModule1.FDQueryClientes.FieldByName('IDCLIENTE').AsInteger;
 
-  // Preenche os campos com os dados do cliente
   edtNome.Text        := DataModule1.FDQueryClientes.FieldByName('NOME').AsString;
   edtTelefone.Text    := DataModule1.FDQueryClientes.FieldByName('TELEFONE').AsString;
   edtEmail.Text       := DataModule1.FDQueryClientes.FieldByName('EMAIL').AsString;
@@ -201,7 +196,6 @@ begin
   edtComplemento.Text := DataModule1.FDQueryClientes.FieldByName('COMPLEMENTO').AsString;
   edtCEP.Text         := DataModule1.FDQueryClientes.FieldByName('CEP').AsString;
 
-  // Habilita os botões de edição, se necessário
   HabilitarCampos(False);
 
 end;
@@ -229,6 +223,7 @@ end;
 
 procedure TFrmCadastroDeClientes.FormShow(Sender: TObject);
 begin
+
   DataModule1.FDQueryClientes.AfterScroll := Self.FDQueryClientesAfterScroll;
 
   if not DataModule1.FDQueryClientes.IsEmpty then
@@ -243,6 +238,9 @@ begin
     DataModule1.FDQueryClientes.First;
   end;
   DataModule1.FDQueryClientes.AfterScroll := FDQueryClientesAfterScroll;
+
+  PageControl1.ActivePage := TabSheet1;
+
 end;
 
 procedure TFrmCadastroDeClientes.HabilitarCampos(Ativo: Boolean);
