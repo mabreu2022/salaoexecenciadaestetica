@@ -11,6 +11,7 @@ object DataModule1: TDataModule1
       'Server=127.0.0.1'
       'Port=3050'
       'DriverID=FB')
+    Connected = True
     LoginPrompt = False
     Left = 88
     Top = 56
@@ -38,10 +39,30 @@ object DataModule1: TDataModule1
     Left = 88
     Top = 168
   end
-  object FDQuery2: TFDQuery
+  object FDQqueryFotoProcedimento: TFDQuery
     Connection = FDConnection1
+    SQL.Strings = (
+      'SELECT'
+      '  FP.IDFOTO,'
+      '  FP.IDPROCEDIMENTO,'
+      '  FP.CAMINHOARQUIVO,'
+      '  FP.IMAGEM,'
+      '  FP.DATAINCLUSAO'
+      'FROM'
+      '  FOTOSPROCEDIMENTO FP'
+      'WHERE'
+      '  FP.IDPROCEDIMENTO = :IDPROCEDIMENTO'
+      'ORDER BY'
+      '  FP.DATAINCLUSAO DESC')
     Left = 88
     Top = 232
+    ParamData = <
+      item
+        Name = 'IDPROCEDIMENTO'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
   end
   object FDQuery3: TFDQuery
     Connection = FDConnection1
@@ -50,25 +71,26 @@ object DataModule1: TDataModule1
   end
   object FDQuery4: TFDQuery
     Connection = FDConnection1
-    Left = 80
-    Top = 352
+    Left = 88
+    Top = 368
   end
   object DSClientes: TDataSource
     DataSet = FDQueryClientes
-    Left = 176
+    Left = 216
     Top = 168
   end
-  object DataSource2: TDataSource
-    Left = 168
+  object dsFotoProcedimento: TDataSource
+    DataSet = FDQqueryFotoProcedimento
+    Left = 216
     Top = 232
   end
   object DataSource3: TDataSource
-    Left = 160
+    Left = 216
     Top = 296
   end
   object DataSource4: TDataSource
-    Left = 160
-    Top = 360
+    Left = 216
+    Top = 368
   end
   object FDTransaction1: TFDTransaction
     Connection = FDConnection1

@@ -35,9 +35,12 @@ type
     Procedimentos1: TMenuItem;
     Deslogarde1: TMenuItem;
     Timer1: TTimer;
+    Procedimentos2: TMenuItem;
+    FotosdosProcedimentos1: TMenuItem;
     procedure Clientes2Click(Sender: TObject);
     procedure CategoriasdeServios1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure FotosdosProcedimentos1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -51,7 +54,7 @@ implementation
 
 {$R *.dfm}
 
-uses uView.CadastroCategorias, uDao.Dm;
+uses uView.CadastroCategorias, uDao.Dm, uView.FotoProcedimento;
 
 procedure TFrmPrincipal.CategoriasdeServios1Click(Sender: TObject);
 begin
@@ -70,6 +73,16 @@ begin
     FrmCadastroDeClientes.ShowModal;
   finally
     FrmCadastroDeClientes.Free;
+  end;
+end;
+
+procedure TFrmPrincipal.FotosdosProcedimentos1Click(Sender: TObject);
+begin
+  Application.CreateForm(TFrmFotoProcedimento, FrmFotoProcedimento);
+  try
+    FrmFotoProcedimento.ShowModal;
+  finally
+    FrmFotoProcedimento.Free;
   end;
 end;
 

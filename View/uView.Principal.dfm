@@ -574,6 +574,13 @@ object FrmPrincipal: TFrmPrincipal
         end
         object Procedimentos1: TMenuItem
           Caption = 'Procedimentos'
+          object Procedimentos2: TMenuItem
+            Caption = 'Procedimentos'
+          end
+          object FotosdosProcedimentos1: TMenuItem
+            Caption = 'Fotos dos Procedimentos'
+            OnClick = FotosdosProcedimentos1Click
+          end
         end
       end
       object Servios1: TMenuItem

@@ -17,6 +17,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    procedure CarregarImagemDeArquivo(const AFilePath: string);
+
     property IDFOTO: Integer read FIDFOTO write FIDFOTO;
     property IDPROCEDIMENTO: Integer read FIDPROCEDIMENTO write FIDPROCEDIMENTO;
     property CAMINHOARQUIVO: string read FCAMINHOARQUIVO write FCAMINHOARQUIVO;
@@ -37,6 +39,13 @@ destructor TFotoProcedimento.Destroy;
 begin
   FreeAndNil(FIMAGEM);
   inherited;
+end;
+
+procedure TFotoProcedimento.CarregarImagemDeArquivo(const AFilePath: string);
+begin
+  FCAMINHOARQUIVO := AFilePath;
+  FIMAGEM.Clear;
+  FIMAGEM.LoadFromFile(AFilePath);
 end;
 
 end.

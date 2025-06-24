@@ -80,17 +80,30 @@ type
     dsCategorias: TDataSource;
     memCategorias: TFDMemTable;
     dsMemCategorias: TDataSource;
+    pnlBotoesDasFotos: TPanel;
+    btnAdicionarNovaFoto: TBitBtn;
     procedure btnNovoClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
     procedure btnApagarClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
+    procedure cbProcedimentoCloseUp(Sender: TObject);
+    procedure btnAdicionarNovaFotoClick(Sender: TObject);
+    procedure cbclienteCloseUp(Sender: TObject);
+    procedure dbgPesquisarDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure dbgPesquisarMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure dbgPesquisarMouseLeave(Sender: TObject);
   private
     { Private declarations }
     ControllerFoto: IFotoProcedimentoController;
+    FHoveredRow: Integer;
+    FMouseY: Integer; // Guarda a posição vertical do mouse na grid
     procedure AdicionarMiniatura(Foto: TFotoProcedimento);
     procedure ImgMiniaturaDblClick(Sender: TObject);
+    procedure CarregarMiniaturasNoFlowPanel;
 
 
   public
@@ -136,6 +149,23 @@ begin
 
 end;
 
+procedure TFrmFotoProcedimento.btnAdicionarNovaFotoClick(Sender: TObject);
+begin
+  if OpenPictureDialog1.Execute then
+
+  QryFotos.Append;
+  QryFotos.FieldByName('IDPROCEDIMENTO').AsInteger := cbProcedimento.KeyValue;
+  QryFotos.FieldByName('CAMINHOARQUIVO').AsString := OpenPictureDialog1.FileName;
+
+  QryFotos.CreateBlobStream(QryFotos.FieldByName('IMAGEM'), bmWrite)
+    .CopyFrom(TFileStream.Create(OpenPictureDialog1.FileName, fmOpenRead), 0);
+
+  QryFotos.Post;
+
+  CarregarMiniaturasNoFlowPanel;
+
+end;
+
 procedure TFrmFotoProcedimento.btnApagarClick(Sender: TObject);
 begin
   if not qryFotos.IsEmpty and
@@ -148,9 +178,16 @@ end;
 
 procedure TFrmFotoProcedimento.btnNovoClick(Sender: TObject);
 begin
+  if VarIsNull(cbProcedimento.KeyValue) then
+  begin
+    ShowMessage('Por favor, selecione um procedimento antes de adicionar uma nova foto.');
+    Exit;
+  end;
+
   qryFotos.Append;
   qryFotos.FieldByName('IDPROCEDIMENTO').AsInteger := cbProcedimento.KeyValue;
   qryFotos.FieldByName('DATAINCLUSAO').AsDateTime := Now;
+
 end;
 
 procedure TFrmFotoProcedimento.btnPesquisarClick(Sender: TObject);
@@ -184,14 +221,14 @@ procedure TFrmFotoProcedimento.btnSalvarClick(Sender: TObject);
 var
   Foto: TFotoProcedimento;
 begin
-  // Verificações básicas
-  if cbCliente.KeyValue = Null then
+  // Validações essenciais
+  if VarIsNull(cbCliente.KeyValue) then
   begin
     ShowMessage('Selecione um cliente.');
     Exit;
   end;
 
-  if cbProcedimento.KeyValue = Null then
+  if VarIsNull(cbProcedimento.KeyValue) then
   begin
     ShowMessage('Selecione um procedimento.');
     Exit;
@@ -203,22 +240,165 @@ begin
   Foto := TFotoProcedimento.Create;
   try
     Foto.IDPROCEDIMENTO := cbProcedimento.KeyValue;
-    Foto.CAMINHOARQUIVO := OpenPictureDialog1.FileName;
     Foto.DATAINCLUSAO := Now;
-    Foto.IMAGEM.LoadFromFile(Foto.CAMINHOARQUIVO);
+    Foto.CarregarImagemDeArquivo(OpenPictureDialog1.FileName);
 
-    ControllerFoto.Inserir(Foto);         // DAO/controller grava a foto no banco
-    AdicionarMiniatura(Foto);            // Exibe a miniatura no FlowPanel
-    ShowMessage('Foto salva com sucesso!');
+    ControllerFoto.Inserir(Foto);           // Salva no banco via DAO
+    AdicionarMiniatura(Foto);              // Mostra no FlowPanel
+    ShowMessage('📸 Foto salva com sucesso!');
   finally
     Foto.Free;
+  end;
+
+end;
+
+procedure TFrmFotoProcedimento.CarregarMiniaturasNoFlowPanel;
+var
+  img: TImage;
+  stream: TStream;
+begin
+  FlowPanel1.DestroyComponents;
+
+  QryFotos.First;
+  while not QryFotos.Eof do
+  begin
+    img := TImage.Create(FlowPanel1);
+    img.Parent := FlowPanel1;
+    img.Width := 100;
+    img.Height := 100;
+    img.Stretch := True;
+    img.Proportional := True;
+
+    stream := QryFotos.CreateBlobStream(QryFotos.FieldByName('IMAGEM'), bmRead);
+    try
+      img.Picture.LoadFromStream(stream);
+    finally
+      stream.Free;
+    end;
+
+    QryFotos.Next;
   end;
 
 
 end;
 
+procedure TFrmFotoProcedimento.cbclienteCloseUp(Sender: TObject);
+begin
+ // Garante que um cliente válido foi selecionado
+  if not VarIsNull(cbCliente.KeyValue) then
+  begin
+    QryProcedimentos.Close;
+    cbProcedimento.KeyValue := Null; // limpa seleção anterior
+
+    QryProcedimentos.SQL.Text :=
+      'SELECT P.IDPROCEDIMENTO, S.NOME AS NOMESERVICO ' +
+      'FROM PROCEDIMENTOS P ' +
+      'JOIN SERVICOS S ON S.IDSERVICO = P.IDSERVICO ' +
+      'WHERE P.ATIVO = ''S'' AND P.IDCLIENTE = :IDCLIENTE ' +
+      'ORDER BY S.NOME';
+
+    QryProcedimentos.ParamByName('IDCLIENTE').AsInteger := cbCliente.KeyValue;
+    QryProcedimentos.Open;
+
+    // Limpa imagens anteriores
+    QryFotos.Close;
+    FlowPanel1.DestroyComponents;
+
+    // Mostra aviso se o cliente não tiver procedimentos ativos
+    if QryProcedimentos.IsEmpty then
+    begin
+      ShowMessage('Este cliente não possui procedimentos ativos.');
+    end;
+  end
+  else
+  begin
+    QryProcedimentos.Close;
+    QryFotos.Close;
+    cbProcedimento.KeyValue := Null;
+    FlowPanel1.DestroyComponents;
+  end;
+
+
+end;
+
+procedure TFrmFotoProcedimento.cbProcedimentoCloseUp(Sender: TObject);
+begin
+  QryFotos.Close;
+  QryFotos.ParamByName('IDPROCEDIMENTO').AsInteger := cbProcedimento.KeyValue;
+  QryFotos.Open;
+
+  CarregarMiniaturasNoFlowPanel;
+
+end;
+
+procedure TFrmFotoProcedimento.dbgPesquisarDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+const
+  CorLinhaPar = $00F0F0F0;
+  CorLinhaHover = $00D8E8FF;
+var
+  Grid: TDBGrid;
+  RecNo: Integer;
+  LinhaAtualTop, LinhaAtualBottom: Integer;
+  EstaLinhaEhHover: Boolean;
+begin
+  Grid := Sender as TDBGrid;
+  RecNo := Grid.DataSource.DataSet.RecNo;
+
+  // Calcula a posição vertical da linha
+  LinhaAtualTop := Rect.Top;
+  LinhaAtualBottom := Rect.Bottom;
+
+  // Verifica se o mouse está dentro da altura da célula
+  EstaLinhaEhHover := (FMouseY >= LinhaAtualTop) and (FMouseY < LinhaAtualBottom);
+
+  if gdSelected in State then
+  begin
+    Grid.Canvas.Brush.Color := clHighlight;
+    Grid.Canvas.Font.Color := clHighlightText;
+  end
+  else if EstaLinhaEhHover then
+  begin
+    Grid.Canvas.Brush.Color := CorLinhaHover;
+    Grid.Canvas.Font.Color := clBlack;
+  end
+  else
+  begin
+    if RecNo mod 2 = 0 then
+      Grid.Canvas.Brush.Color := CorLinhaPar
+    else
+      Grid.Canvas.Brush.Color := clWhite;
+    Grid.Canvas.Font.Color := clBlack;
+  end;
+
+  Grid.Canvas.FillRect(Rect);
+  Grid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+
+end;
+
+procedure TFrmFotoProcedimento.dbgPesquisarMouseLeave(Sender: TObject);
+begin
+  FMouseY := -1;
+  (Sender as TDBGrid).Invalidate;
+
+end;
+
+procedure TFrmFotoProcedimento.dbgPesquisarMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if FMouseY <> Y then
+  begin
+    FMouseY := Y;
+    (Sender as TDBGrid).Invalidate;
+  end;
+
+end;
+
 procedure TFrmFotoProcedimento.FormCreate(Sender: TObject);
 begin
+  FHoveredRow := -1;
+  FMouseY := -1;
+
   // Instancia o Controller
   ControllerFoto := TFotoProcedimentoController.Create;
 
@@ -252,6 +432,9 @@ begin
   cbCategoria.ListSource := dsMemCategorias;
   cbCategoria.KeyField := 'IDCATEGORIA';
   cbCategoria.ListField := 'DESCRICAO';
+
+//  QryProcedimentos.Open;
+  QryClientes.Open;
 
 
 end;

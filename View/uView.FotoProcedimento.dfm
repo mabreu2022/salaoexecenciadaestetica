@@ -19,9 +19,6 @@ object FrmFotoProcedimento: TFrmFotoProcedimento
     Height = 41
     Align = alBottom
     TabOrder = 0
-    ExplicitLeft = -205
-    ExplicitTop = 235
-    ExplicitWidth = 829
     object btnSalvar: TBitBtn
       Left = 266
       Top = 9
@@ -270,10 +267,8 @@ object FrmFotoProcedimento: TFrmFotoProcedimento
         Left = 0
         Top = 113
         Width = 831
-        Height = 257
-        Align = alClient
+        Height = 224
         TabOrder = 0
-        ExplicitTop = 111
       end
       object Panel3: TPanel
         Left = 0
@@ -305,13 +300,38 @@ object FrmFotoProcedimento: TFrmFotoProcedimento
           ListField = 'NOME'
           ListSource = dsClientes
           TabOrder = 0
+          OnCloseUp = cbclienteCloseUp
         end
         object cbProcedimento: TDBLookupComboBox
           Left = 16
           Top = 72
           Width = 353
           Height = 23
+          KeyField = 'IDPROCEDIMENTO'
+          ListField = 'NOMESERVICO'
+          ListSource = dsProcedimentos
           TabOrder = 1
+          OnCloseUp = cbProcedimentoCloseUp
+        end
+      end
+      object pnlBotoesDasFotos: TPanel
+        Left = 0
+        Top = 329
+        Width = 831
+        Height = 41
+        Align = alBottom
+        TabOrder = 2
+        ExplicitLeft = 368
+        ExplicitTop = 344
+        ExplicitWidth = 185
+        object btnAdicionarNovaFoto: TBitBtn
+          Left = 13
+          Top = 10
+          Width = 163
+          Height = 25
+          Caption = 'Adicionar Nova Foto'
+          TabOrder = 0
+          OnClick = btnAdicionarNovaFotoClick
         end
       end
     end
@@ -325,7 +345,6 @@ object FrmFotoProcedimento: TFrmFotoProcedimento
         Height = 48
         Align = alTop
         TabOrder = 0
-        ExplicitTop = 8
         object Label3: TLabel
           Left = 8
           Top = 1
@@ -445,6 +464,9 @@ object FrmFotoProcedimento: TFrmFotoProcedimento
         TitleFont.Height = -12
         TitleFont.Name = 'Segoe UI'
         TitleFont.Style = []
+        OnDrawColumnCell = dbgPesquisarDrawColumnCell
+        OnMouseLeave = dbgPesquisarMouseLeave
+        OnMouseMove = dbgPesquisarMouseMove
       end
     end
   end
@@ -454,25 +476,46 @@ object FrmFotoProcedimento: TFrmFotoProcedimento
   end
   object dsClientes: TDataSource
     DataSet = QryClientes
-    Left = 164
-    Top = 106
+    Left = 116
+    Top = 138
   end
   object QryClientes: TFDQuery
+    Active = True
     Connection = DataModule1.FDConnection1
     SQL.Strings = (
       'SELECT IDCLIENTE, NOME FROM CLIENTES ORDER BY NOME')
     Left = 52
-    Top = 106
+    Top = 130
   end
   object QryProcedimentos: TFDQuery
+    Active = True
     Connection = DataModule1.FDConnection1
+    SQL.Strings = (
+      'SELECT'
+      '  P.IDPROCEDIMENTO,'
+      '  P.IDCLIENTE,'
+      '  C.NOME AS NOMECLIENTE,'
+      '  P.IDSERVICO,'
+      '  S.NOME AS NOMESERVICO,'
+      '  P.DATAHORA,'
+      '  P.CONCLUIDO,'
+      '  P.ATIVO,'
+      '  P.OBSERVACOES'
+      'FROM'
+      '  PROCEDIMENTOS P'
+      '  JOIN CLIENTES C ON C.IDCLIENTE = P.IDCLIENTE'
+      '  JOIN SERVICOS S ON S.IDSERVICO = P.IDSERVICO'
+      'WHERE'
+      '  P.ATIVO = '#39'S'#39
+      'ORDER BY'
+      '  P.DATAHORA DESC')
     Left = 52
-    Top = 170
+    Top = 194
   end
   object dsProcedimentos: TDataSource
     DataSet = QryProcedimentos
-    Left = 164
-    Top = 170
+    Left = 140
+    Top = 186
   end
   object QryFotos: TFDQuery
     SQL.Strings = (

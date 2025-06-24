@@ -34,11 +34,11 @@ type
     FDConnection1: TFDConnection;
     FDPhysFBDriverLink1: TFDPhysFBDriverLink;
     FDQueryClientes: TFDQuery;
-    FDQuery2: TFDQuery;
+    FDQqueryFotoProcedimento: TFDQuery;
     FDQuery3: TFDQuery;
     FDQuery4: TFDQuery;
     DSClientes: TDataSource;
-    DataSource2: TDataSource;
+    dsFotoProcedimento: TDataSource;
     DataSource3: TDataSource;
     DataSource4: TDataSource;
     FDTransaction1: TFDTransaction;
