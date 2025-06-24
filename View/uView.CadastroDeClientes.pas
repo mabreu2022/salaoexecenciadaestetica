@@ -36,7 +36,7 @@ type
     TabSheet2: TTabSheet;
     btnSalvar: TBitBtn;
     btnNovo: TBitBtn;
-    BitBtn1: TBitBtn;
+    btnEditar: TBitBtn;
     btnApagar: TBitBtn;
     edtNome: TEdit;
     edtEndereco: TEdit;
@@ -61,7 +61,7 @@ type
     DBNavigator1: TDBNavigator;
     procedure btnSalvarClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
     procedure btnApagarClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -103,7 +103,7 @@ begin
   DataModule1.FDQueryClientes.Open;
 end;
 
-procedure TFrmCadastroDeClientes.BitBtn1Click(Sender: TObject);
+procedure TFrmCadastroDeClientes.btnEditarClick(Sender: TObject);
 begin
   if not RegistroSelecionado then
   begin

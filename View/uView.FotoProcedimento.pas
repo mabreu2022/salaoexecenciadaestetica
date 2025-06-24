@@ -118,7 +118,7 @@ implementation
 
 {$R *.dfm}
 
-uses uDao.Dm;
+uses uDao.Dm, uView.CadastroDeProcedimento;
 
 procedure TFrmFotoProcedimento.btnEditarClick(Sender: TObject);
 begin
@@ -178,18 +178,40 @@ begin
 end;
 
 procedure TFrmFotoProcedimento.btnNovoClick(Sender: TObject);
+//begin
+// if (not Assigned(cbProcedimento.ListSource)) or
+//     (cbProcedimento.ListSource.DataSet.IsEmpty) or
+//     VarIsNull(cbProcedimento.KeyValue) then
+//  begin
+//    ShowMessage('Selecione um procedimento válido antes de adicionar uma foto.');
+//    Exit;
+//  end;
+//
+//  qryFotos.Append;
+//  qryFotos.FieldByName('IDPROCEDIMENTO').AsInteger := cbProcedimento.KeyValue;
+//  qryFotos.FieldByName('DATAINCLUSAO').AsDateTime := Now;
+ var
+  IDCliente: Integer;
 begin
- if (not Assigned(cbProcedimento.ListSource)) or
-     (cbProcedimento.ListSource.DataSet.IsEmpty) or
-     VarIsNull(cbProcedimento.KeyValue) then
+  if VarIsNull(cbCliente.KeyValue) then
   begin
-    ShowMessage('Selecione um procedimento válido antes de adicionar uma foto.');
+    ShowMessage('Selecione um cliente antes de cadastrar um procedimento.');
     Exit;
   end;
 
-  qryFotos.Append;
-  qryFotos.FieldByName('IDPROCEDIMENTO').AsInteger := cbProcedimento.KeyValue;
-  qryFotos.FieldByName('DATAINCLUSAO').AsDateTime := Now;
+  IDCliente := cbCliente.KeyValue;
+
+  // Abrir o form de cadastro de procedimentos
+  Application.CreateForm(TFrmCadastroProcedimento, FrmCadastroProcedimento);
+  try
+    FrmCadastroProcedimento.DefinirCliente(IDCliente); // se houver esse método
+    FrmCadastroProcedimento.ShowModal;
+  finally
+    FrmCadastroProcedimento.Free;
+  end;
+
+  // Recarrega os procedimentos após o cadastro
+  cbClienteCloseUp(cbCliente);
 
 
 end;
@@ -284,39 +306,44 @@ begin
 end;
 
 procedure TFrmFotoProcedimento.cbclienteCloseUp(Sender: TObject);
+var
+  Controller: IFotoProcedimentoController;
 begin
-
-  if not VarIsNull(cbCliente.KeyValue) then
+  if VarIsNull(cbCliente.KeyValue) then
   begin
-    QryProcedimentos.Close;
     cbProcedimento.KeyValue := Null;
-
-    QryProcedimentos.SQL.Text :=
-      'SELECT P.IDPROCEDIMENTO, S.NOME AS NOMESERVICO ' +
-      'FROM PROCEDIMENTOS P ' +
-      'JOIN SERVICOS S ON S.IDSERVICO = P.IDSERVICO ' +
-      'WHERE P.ATIVO = ''S'' AND P.IDCLIENTE = :IDCLIENTE ' +
-      'ORDER BY S.NOME';
-
-    QryProcedimentos.ParamByName('IDCLIENTE').AsInteger := cbCliente.KeyValue;
-    QryProcedimentos.Open;
+    cbProcedimento.ListSource := nil;
 
     QryFotos.Close;
     FlowPanel1.DestroyComponents;
-
-    if QryProcedimentos.IsEmpty then
-    begin
-      ShowMessage('Este cliente não possui procedimentos ativos.');
-    end;
-  end
-  else
-  begin
-    QryProcedimentos.Close;
-    QryFotos.Close;
-    cbProcedimento.KeyValue := Null;
-    FlowPanel1.DestroyComponents;
+    Exit;
   end;
 
+  Controller := TFotoProcedimentoController.Create;
+
+  // Verifica se o cliente tem procedimentos
+  if not Controller.ClientePossuiProcedimentos(cbCliente.KeyValue) then
+  begin
+    cbProcedimento.ListSource := nil;
+    cbProcedimento.KeyValue := Null;
+    QryFotos.Close;
+    FlowPanel1.DestroyComponents;
+
+    if MessageDlg('Este cliente não possui procedimentos ativos.' + sLineBreak +
+                  'Deseja cadastrar um novo agora?',
+                  mtInformation, [mbYes, mbNo], 0) = mrYes then
+    begin
+      btnNovo.Click;  //codigo do mesmo ainda a ser definido
+    end;
+
+    Exit;
+  end;
+
+  cbProcedimento.ListSource := Controller.ListarProcedimentosDoCliente(cbCliente.KeyValue);
+  cbProcedimento.KeyValue := Null;
+
+  QryFotos.Close;
+  FlowPanel1.DestroyComponents;
 
 end;
 

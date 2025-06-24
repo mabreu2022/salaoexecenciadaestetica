@@ -187,6 +187,10 @@
         </DCCReference>
         <DCCReference Include="Infraestrutura\uSessao.pas"/>
         <DCCReference Include="Core\uConstantes.pas"/>
+        <DCCReference Include="View\uView.CadastroDeProcedimento.pas">
+            <Form>FrmCadastroProcedimento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

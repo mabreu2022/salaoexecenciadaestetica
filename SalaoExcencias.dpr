@@ -34,7 +34,8 @@ uses
   uController.FotoProcedimento in 'Controller\uController.FotoProcedimento.pas',
   uView.FotoAmpliada in 'View\uView.FotoAmpliada.pas' {FrmFotoAmpliada},
   uSessao in 'Infraestrutura\uSessao.pas',
-  uConstantes in 'Core\uConstantes.pas';
+  uConstantes in 'Core\uConstantes.pas',
+  uView.CadastroDeProcedimento in 'View\uView.CadastroDeProcedimento.pas' {FrmCadastroProcedimento};
 
 //  Vcl.Themes,
 //  Vcl.Styles;
@@ -54,6 +55,7 @@ begin
   Application.CreateForm(TFrmCadastrodeServicos, FrmCadastrodeServicos);
   Application.CreateForm(TFrmFotoProcedimento, FrmFotoProcedimento);
   Application.CreateForm(TFrmFotoAmpliada, FrmFotoAmpliada);
+  Application.CreateForm(TFrmCadastroProcedimento, FrmCadastroProcedimento);
   // Cria manualmente a tela de login e exibe como modal
   FrmLogin := TFrmLogin.Create(nil);
   try

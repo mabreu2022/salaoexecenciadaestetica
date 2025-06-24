@@ -322,9 +322,6 @@ object FrmFotoProcedimento: TFrmFotoProcedimento
         Height = 41
         Align = alBottom
         TabOrder = 2
-        ExplicitLeft = 368
-        ExplicitTop = 344
-        ExplicitWidth = 185
         object btnAdicionarNovaFoto: TBitBtn
           Left = 13
           Top = 10

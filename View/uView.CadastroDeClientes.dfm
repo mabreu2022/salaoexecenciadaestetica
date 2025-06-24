@@ -111,7 +111,7 @@ object FrmCadastroDeClientes: TFrmCadastroDeClientes
       TabOrder = 1
       OnClick = btnNovoClick
     end
-    object BitBtn1: TBitBtn
+    object btnEditar: TBitBtn
       Left = 105
       Top = 9
       Width = 75
@@ -154,7 +154,7 @@ object FrmCadastroDeClientes: TFrmCadastroDeClientes
         DCFFFFE4C7FFFDDFA6FAC4A9165C000000000000000000000000000000000000
         000000000000}
       TabOrder = 2
-      OnClick = BitBtn1Click
+      OnClick = btnEditarClick
     end
     object btnApagar: TBitBtn
       Left = 186

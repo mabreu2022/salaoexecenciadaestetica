@@ -35,11 +35,11 @@ type
     FDPhysFBDriverLink1: TFDPhysFBDriverLink;
     FDQueryClientes: TFDQuery;
     FDQqueryFotoProcedimento: TFDQuery;
-    FDQuery3: TFDQuery;
+    qryProcedimentos: TFDQuery;
     FDQuery4: TFDQuery;
     DSClientes: TDataSource;
     dsFotoProcedimento: TDataSource;
-    DataSource3: TDataSource;
+    dsProcedimentos: TDataSource;
     DataSource4: TDataSource;
     FDTransaction1: TFDTransaction;
     procedure DataModuleCreate(Sender: TObject);

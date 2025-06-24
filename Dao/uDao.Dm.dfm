@@ -64,10 +64,36 @@ object DataModule1: TDataModule1
         Value = Null
       end>
   end
-  object FDQuery3: TFDQuery
+  object qryProcedimentos: TFDQuery
+    Active = True
     Connection = FDConnection1
+    SQL.Strings = (
+      'SELECT '
+      '  P.IDPROCEDIMENTO,'
+      '  P.IDCLIENTE,'
+      '  P.IDSERVICO,'
+      '  S.NOME AS NOMESERVICO,'
+      '  P.DATAHORA,'
+      '  P.OBSERVACOES,'
+      '  P.CONCLUIDO,'
+      '  P.ATIVO'
+      'FROM '
+      '  PROCEDIMENTOS P'
+      'JOIN '
+      '  SERVICOS S ON S.IDSERVICO = P.IDSERVICO'
+      'WHERE '
+      '  P.IDCLIENTE = :IDCLIENTE'
+      'ORDER BY '
+      '  S.NOME;')
     Left = 88
     Top = 296
+    ParamData = <
+      item
+        Name = 'IDCLIENTE'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
   end
   object FDQuery4: TFDQuery
     Connection = FDConnection1
@@ -84,7 +110,8 @@ object DataModule1: TDataModule1
     Left = 216
     Top = 232
   end
-  object DataSource3: TDataSource
+  object dsProcedimentos: TDataSource
+    DataSet = qryProcedimentos
     Left = 216
     Top = 296
   end

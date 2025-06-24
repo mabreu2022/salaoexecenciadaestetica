@@ -2,8 +2,8 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2025/06/20 17:40:39.000.897,=C:\Users\Mauricio Abreu\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2025/06/20 17:41:55.000.902,C:\Users\Mauricio Abreu\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.Principal.pas</Transaction>
     <Transaction>2025/06/20 17:41:55.000.902,C:\Users\Mauricio Abreu\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.Principal.dfm</Transaction>
+    <Transaction>2025/06/20 17:41:55.000.902,C:\Users\Mauricio Abreu\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.Principal.pas</Transaction>
     <Transaction>2025/06/20 17:42:06.000.467,C:\Users\Mauricio Abreu\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\FONTES\salaoexecencias\SalaoExcencias.dproj</Transaction>
     <Transaction>2025/06/20 17:43:47.000.296,=C:\FONTES\salaoexecencias\View\uView.Login.pas</Transaction>
     <Transaction>2025/06/20 17:45:50.000.696,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
@@ -12,8 +12,8 @@
     <Transaction>2025/06/20 18:10:52.000.691,C:\FONTES\salaoexecencias\Dao\uDm.dfm=C:\FONTES\salaoexecencias\Dao\uDao.Dm.dfm</Transaction>
     <Transaction>2025/06/20 18:10:52.000.691,C:\FONTES\salaoexecencias\Dao\uDm.pas=C:\FONTES\salaoexecencias\Dao\uDao.Dm.pas</Transaction>
     <Transaction>2025/06/20 18:35:38.000.373,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/20 18:36:11.000.546,C:\FONTES\salaoexecencias\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.CadastroDeClientes.dfm</Transaction>
     <Transaction>2025/06/20 18:36:11.000.546,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.CadastroDeClientes.pas</Transaction>
+    <Transaction>2025/06/20 18:36:11.000.546,C:\FONTES\salaoexecencias\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.CadastroDeClientes.dfm</Transaction>
     <Transaction>2025/06/20 19:45:45.000.757,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/20 19:46:05.000.700,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\Model\uModel.Cliente.pas</Transaction>
     <Transaction>2025/06/20 19:47:11.000.715,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
@@ -52,15 +52,15 @@
     <Transaction>2025/06/21 19:21:40.000.934,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/21 19:22:03.000.197,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\Dao\uDAO.Procedimento.pas</Transaction>
     <Transaction>2025/06/21 19:29:40.000.008,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/21 19:31:00.000.794,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.CadastroCategorias.pas</Transaction>
     <Transaction>2025/06/21 19:31:00.000.794,C:\FONTES\salaoexecencias\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.CadastroCategorias.dfm</Transaction>
+    <Transaction>2025/06/21 19:31:00.000.794,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.CadastroCategorias.pas</Transaction>
     <Transaction>2025/06/21 19:37:18.000.649,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/21 19:37:56.000.170,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\Controller\uController.Categoria.pas</Transaction>
     <Transaction>2025/06/21 19:43:54.000.428,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/21 19:44:06.000.557,C:\FONTES\salaoexecencias\Dao\uDAO.FotoProcedimento.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/22 10:31:15.000.685,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/22 10:34:47.000.512,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.CadastroDeServicos.pas</Transaction>
     <Transaction>2025/06/22 10:34:47.000.512,C:\FONTES\salaoexecencias\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.CadastroDeServicos.dfm</Transaction>
+    <Transaction>2025/06/22 10:34:47.000.512,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.CadastroDeServicos.pas</Transaction>
     <Transaction>2025/06/22 10:49:42.000.699,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/22 10:50:11.000.385,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\Controller\uController.Servico.pas</Transaction>
     <Transaction>2025/06/22 11:13:47.000.873,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
@@ -71,9 +71,12 @@
     <Transaction>2025/06/23 06:21:30.000.589,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 06:22:02.000.401,C:\FONTES\salaoexecencias\Controller\uController.FotoProcedimento.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
     <Transaction>2025/06/23 08:50:05.000.796,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/23 08:50:29.000.371,C:\FONTES\salaoexecencias\View\uView.FotoAmpliada.dfm=C:\FONTES\salaoexecencias\Unit1.dfm</Transaction>
     <Transaction>2025/06/23 08:50:29.000.371,C:\FONTES\salaoexecencias\View\uView.FotoAmpliada.pas=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
-    <Transaction>2025/06/23 12:22:21.377,=C:\FONTES\salaoexecencias\Infraestrutura\uSessao.pas</Transaction>
-    <Transaction>2025/06/23 12:25:47.449,=C:\FONTES\salaoexecencias\Core\uConstantes.pas</Transaction>
+    <Transaction>2025/06/23 08:50:29.000.371,C:\FONTES\salaoexecencias\View\uView.FotoAmpliada.dfm=C:\FONTES\salaoexecencias\Unit1.dfm</Transaction>
+    <Transaction>2025/06/23 12:22:21.000.377,=C:\FONTES\salaoexecencias\Infraestrutura\uSessao.pas</Transaction>
+    <Transaction>2025/06/23 12:25:47.000.449,=C:\FONTES\salaoexecencias\Core\uConstantes.pas</Transaction>
+    <Transaction>2025/06/24 13:25:04.000.155,=C:\FONTES\salaoexecencias\Unit1.pas</Transaction>
+    <Transaction>2025/06/24 13:26:03.000.402,C:\FONTES\salaoexecencias\Unit1.pas=C:\FONTES\salaoexecencias\View\uView.CadastroDeProcedimento.pas</Transaction>
+    <Transaction>2025/06/24 13:26:03.000.402,C:\FONTES\salaoexecencias\Unit1.dfm=C:\FONTES\salaoexecencias\View\uView.CadastroDeProcedimento.dfm</Transaction>
   </Transactions>
 </BorlandProject>

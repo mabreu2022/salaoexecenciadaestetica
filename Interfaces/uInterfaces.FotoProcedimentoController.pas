@@ -3,7 +3,8 @@ unit uInterfaces.FotoProcedimentoController;
 interface
 
 uses
-  uModel.FotoProcedimento;
+  uModel.FotoProcedimento,
+  Data.DB;
 
 type
   IFotoProcedimentoController = interface
@@ -11,6 +12,11 @@ type
     procedure Inserir(AFoto: TFotoProcedimento);
     procedure Excluir(ID: Integer);
     function ListarPorProcedimento(IDProcedimento: Integer): TArray<TFotoProcedimento>;
+    function ListarProcedimentosDoCliente(AIDCliente: Integer): TDataSource;
+    function ClientePossuiProcedimentos(AIDCliente: Integer): Boolean;
+    procedure InserirNovaFoto(AIDProcedimento: Integer);
+
+
   end;
 
 implementation

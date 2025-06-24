@@ -1,23 +1,21 @@
-object FrmCadastroDeClientes: TFrmCadastroDeClientes
+object FrmCadastroProcedimento: TFrmCadastroProcedimento
   Left = 0
   Top = 0
-  Caption = 'Cadastro de Clientes'
-  ClientHeight = 276
-  ClientWidth = 509
+  Caption = 'Cadastro de Procedimento'
+  ClientHeight = 441
+  ClientWidth = 835
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poScreenCenter
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 235
-    Width = 509
+    Top = 400
+    Width = 835
     Height = 41
     Align = alBottom
     TabOrder = 0
@@ -109,9 +107,8 @@ object FrmCadastroDeClientes: TFrmCadastroDeClientes
         43C16E5C42FA6E5C42EB6D5B428E66664C0A0000000000000000000000000000
         000000000000}
       TabOrder = 1
-      OnClick = btnNovoClick
     end
-    object BitBtn1: TBitBtn
+    object btnEditar: TBitBtn
       Left = 105
       Top = 9
       Width = 75
@@ -154,7 +151,6 @@ object FrmCadastroDeClientes: TFrmCadastroDeClientes
         DCFFFFE4C7FFFDDFA6FAC4A9165C000000000000000000000000000000000000
         000000000000}
       TabOrder = 2
-      OnClick = BitBtn1Click
     end
     object btnApagar: TBitBtn
       Left = 186
@@ -199,10 +195,9 @@ object FrmCadastroDeClientes: TFrmCadastroDeClientes
         D4E0FAE4CCE5E3C3A7E5E6C4A6E3DFC2A6590000000000000000000000000000
         000000000000}
       TabOrder = 3
-      OnClick = btnApagarClick
     end
     object btnFechar: TBitBtn
-      Left = 430
+      Left = 750
       Top = 9
       Width = 75
       Height = 25
@@ -244,141 +239,71 @@ object FrmCadastroDeClientes: TFrmCadastroDeClientes
         4BFF5A4B4BFF5A4B4AFF5A4B4AFF5B4C4BFF5E4F4EFD594A487B000000000000
         000000000000}
       TabOrder = 4
-      OnClick = btnFecharClick
+    end
+    object DBNavigator1: TDBNavigator
+      Left = 360
+      Top = 9
+      Width = 365
+      Height = 25
+      DataSource = DataModule1.DSClientes
+      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbRefresh]
+      TabOrder = 5
     end
   end
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 509
-    Height = 235
-    ActivePage = TabSheet2
+    Width = 835
+    Height = 400
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'Cadastro'
-      object lblNome: TLabel
+      object lblCliente: TLabel
+        Left = 32
+        Top = 8
+        Width = 50
+        Height = 15
+        Caption = 'lblCliente'
+      end
+      object lblServico: TLabel
+        Left = 32
+        Top = 48
+        Width = 51
+        Height = 15
+        Caption = 'lblServico'
+      end
+      object cbCliente: TDBLookupComboBox
         Left = 24
-        Top = 16
-        Width = 33
-        Height = 15
-        Caption = 'Nome'
-      end
-      object lblEndereco: TLabel
-        Left = 24
-        Top = 56
-        Width = 49
-        Height = 15
-        Caption = 'Endere'#231'o'
-      end
-      object lblComplemento: TLabel
-        Left = 24
-        Top = 97
-        Width = 77
-        Height = 15
-        Caption = 'Complemento'
-      end
-      object lblNumero: TLabel
-        Left = 237
-        Top = 97
-        Width = 44
-        Height = 15
-        Caption = 'N'#250'mero'
-      end
-      object lblCEP: TLabel
-        Left = 369
-        Top = 97
-        Width = 21
-        Height = 15
-        Caption = 'CEP'
-      end
-      object lbltelefone: TLabel
-        Left = 24
-        Top = 144
-        Width = 45
-        Height = 15
-        Caption = 'Telefone'
-      end
-      object lblEmail: TLabel
-        Left = 152
-        Top = 144
-        Width = 34
-        Height = 15
-        Caption = 'E-mail'
-      end
-      object edtNome: TEdit
-        Left = 20
-        Top = 32
-        Width = 466
+        Top = 24
+        Width = 233
         Height = 23
+        KeyField = 'IDCLIENTE'
+        ListField = 'NOME'
+        ListSource = DataModule1.DSClientes
         TabOrder = 0
       end
-      object edtEndereco: TEdit
-        Left = 20
-        Top = 74
-        Width = 466
+      object cbServico: TDBLookupComboBox
+        Left = 24
+        Top = 64
+        Width = 233
         Height = 23
+        ListField = 'NOME'
+        ListSource = DataModule1.DSClientes
         TabOrder = 1
-      end
-      object edtComplemento: TEdit
-        Left = 20
-        Top = 115
-        Width = 205
-        Height = 23
-        TabOrder = 2
-      end
-      object edtNumero: TEdit
-        Left = 235
-        Top = 115
-        Width = 121
-        Height = 23
-        TabOrder = 3
-      end
-      object edtCEP: TEdit
-        Left = 365
-        Top = 115
-        Width = 121
-        Height = 23
-        TabOrder = 4
-      end
-      object edtTelefone: TEdit
-        Left = 20
-        Top = 163
-        Width = 121
-        Height = 23
-        TabOrder = 5
-      end
-      object edtEmail: TEdit
-        Left = 147
-        Top = 163
-        Width = 339
-        Height = 23
-        TabOrder = 6
       end
     end
     object TabSheet2: TTabSheet
-      Caption = 'Pesquisa'
+      Caption = 'Pesquisas'
       ImageIndex = 1
-      object DBGrid1: TDBGrid
-        Left = 0
-        Top = 54
-        Width = 616
-        Height = 316
-        TabOrder = 0
-        TitleFont.Charset = DEFAULT_CHARSET
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -12
-        TitleFont.Name = 'Segoe UI'
-        TitleFont.Style = []
-        OnDblClick = DBGrid1DblClick
-      end
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 501
+        Width = 827
         Height = 48
         Align = alTop
-        TabOrder = 1
+        TabOrder = 0
         object Label3: TLabel
           Left = 8
           Top = 1
@@ -437,6 +362,19 @@ object FrmCadastroDeClientes: TFrmCadastroDeClientes
             000000000000}
           TabOrder = 1
         end
+      end
+      object DBGrid1: TDBGrid
+        Left = 0
+        Top = 48
+        Width = 827
+        Height = 322
+        Align = alClient
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -12
+        TitleFont.Name = 'Segoe UI'
+        TitleFont.Style = []
       end
     end
   end
