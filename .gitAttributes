@@ -1,0 +1,9 @@
+# Arquivos Delphi com quebra de linha do Windows
+*.pas text eol=crlf
+*.dfm text eol=crlf
+*.dpr text eol=crlf
+*.dpk text eol=crlf
+
+# Arquivos texto e markdown
+*.txt text eol=lf
+*.md  text eol=lf
