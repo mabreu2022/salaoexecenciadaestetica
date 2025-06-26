@@ -32,13 +32,15 @@ begin
   with TFDQuery.Create(nil) do
   try
     Connection := DataModule1.FDConnection1;
-    SQL.Text := 'INSERT INTO PROCEDIMENTOS (IDCLIENTE, IDSERVICO, DATAHORA, OBSERVACOES, CONCLUIDO) ' +
-                'VALUES (:IDCLIENTE, :IDSERVICO, :DATAHORA, :OBSERVACOES, :CONCLUIDO)';
-    ParamByName('IDCLIENTE').AsInteger := AProc.IDCLIENTE;
-    ParamByName('IDSERVICO').AsInteger := AProc.IDSERVICO;
-    ParamByName('DATAHORA').AsDateTime := AProc.DATAHORA;
+    SQL.Text := 'INSERT INTO PROCEDIMENTOS (IDCLIENTE, IDSERVICO, DATAHORA, OBSERVACOES, CONCLUIDO, ATIVO) ' +
+                'VALUES (:IDCLIENTE, :IDSERVICO, :DATAHORA, :OBSERVACOES, :CONCLUIDO, :ATIVO)';
+    ParamByName('IDCLIENTE').AsInteger  := AProc.IDCLIENTE;
+    ParamByName('IDSERVICO').AsInteger  := AProc.IDSERVICO;
+    ParamByName('DATAHORA').AsDateTime  := AProc.DATAHORA;
     ParamByName('OBSERVACOES').AsString := AProc.OBSERVACOES.DataString;
-    ParamByName('CONCLUIDO').AsBoolean := AProc.CONCLUIDO;
+    ParamByName('CONCLUIDO').AsBoolean  := AProc.CONCLUIDO;
+    ParamByName('ATIVO').AsString       := AProc.ATIVO;
+
     ExecSQL;
   finally
     Free;

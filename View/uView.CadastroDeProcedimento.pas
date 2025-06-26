@@ -3,9 +3,23 @@ unit uView.CadastroDeProcedimento;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.DBCtrls, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Vcl.ComCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids;
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.Buttons,
+  Vcl.DBCtrls,
+  Vcl.StdCtrls,
+  Vcl.ExtCtrls,
+  Vcl.ComCtrls,
+  Data.DB,
+  Vcl.Grids,
+  Vcl.DBGrids;
 
 type
   TFrmCadastroProcedimento = class(TForm)
@@ -25,11 +39,14 @@ type
     btnPesquisar: TBitBtn;
     DBGrid1: TDBGrid;
     cbCliente: TDBLookupComboBox;
-    cbServico: TDBLookupComboBox;
+    cbProcedimento: TDBLookupComboBox;
     lblCliente: TLabel;
-    lblServico: TLabel;
+    lblProcedimento: TLabel;
+    edtDataProcedimento: TDateTimePicker;
+    memObservacoes: TMemo;
     procedure btnSalvarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
   private
     { Private declarations }
     FIDCliente: Integer;
@@ -49,6 +66,23 @@ uses uDao.Dm;
 
 { TFrmCadastroProcedimento }
 
+procedure TFrmCadastroProcedimento.btnNovoClick(Sender: TObject);
+begin
+  // Garante que a query esteja ativa
+  if not DataModule1.qryProcedimentos.Active then
+    DataModule1.qryProcedimentos.Open;
+
+  DataModule1.qryProcedimentos.Append;
+
+  // Limpa campos do formulário, se necessário
+  cbCliente.KeyValue := Null;
+  cbProcedimento .KeyValue := Null;
+  edtDataProcedimento.Date := Date; //tem que gerar no banco automatico
+  memObservacoes.Lines.Clear;
+
+  cbCliente.SetFocus;
+End;
+
 procedure TFrmCadastroProcedimento.btnSalvarClick(Sender: TObject);
 begin
   DataModule1.qryProcedimentos.FieldByName('IDCLIENTE').AsInteger := FIDCliente;
@@ -62,6 +96,7 @@ end;
 procedure TFrmCadastroProcedimento.FormShow(Sender: TObject);
 begin
   DataModule1.FDQueryClientes.Open;
+  DataModule1.qryProcedimentos.Open;
 end;
 
 end.

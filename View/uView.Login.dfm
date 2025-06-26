@@ -547,6 +547,7 @@ object FrmLogin: TFrmLogin
     Width = 121
     Height = 23
     TabOrder = 0
+    Text = 'admin'
   end
   object edtSenha: TMaskEdit
     Left = 40

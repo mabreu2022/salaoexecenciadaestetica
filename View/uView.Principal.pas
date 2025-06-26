@@ -41,6 +41,7 @@ type
     procedure CategoriasdeServios1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure FotosdosProcedimentos1Click(Sender: TObject);
+    procedure Procedimentos2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,7 +55,8 @@ implementation
 
 {$R *.dfm}
 
-uses uView.CadastroCategorias, uDao.Dm, uView.FotoProcedimento;
+uses uView.CadastroCategorias, uDao.Dm, uView.FotoProcedimento,
+  uView.CadastroDeProcedimento;
 
 procedure TFrmPrincipal.CategoriasdeServios1Click(Sender: TObject);
 begin
@@ -83,6 +85,16 @@ begin
     FrmFotoProcedimento.ShowModal;
   finally
     FrmFotoProcedimento.Free;
+  end;
+end;
+
+procedure TFrmPrincipal.Procedimentos2Click(Sender: TObject);
+begin
+  Application.CreateForm(TFrmCadastroProcedimento, FrmCadastroProcedimento);
+  try
+    FrmCadastroProcedimento.ShowModal;
+  finally
+    FrmCadastroProcedimento.Free;
   end;
 end;
 

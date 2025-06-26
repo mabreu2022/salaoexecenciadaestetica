@@ -90,7 +90,7 @@ begin
     end
     else
     begin
-      ShowMessage(MSG_LOGIN_INVALIDO);
+      //ShowMessage(MSG_LOGIN_INVALIDO);
       edtSenha.SetFocus;
     end;
   finally

@@ -1,6 +1,7 @@
 object FrmCadastroProcedimento: TFrmCadastroProcedimento
   Left = 0
   Top = 0
+  BorderStyle = bsSingle
   Caption = 'Cadastro de Procedimento'
   ClientHeight = 441
   ClientWidth = 835
@@ -10,6 +11,7 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
@@ -107,6 +109,7 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
         43C16E5C42FA6E5C42EB6D5B428E66664C0A0000000000000000000000000000
         000000000000}
       TabOrder = 1
+      OnClick = btnNovoClick
     end
     object btnEditar: TBitBtn
       Left = 105
@@ -263,16 +266,16 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
       object lblCliente: TLabel
         Left = 32
         Top = 8
-        Width = 50
+        Width = 93
         Height = 15
-        Caption = 'lblCliente'
+        Caption = 'Nome do lCliente'
       end
-      object lblServico: TLabel
+      object lblProcedimento: TLabel
         Left = 32
         Top = 48
-        Width = 51
+        Width = 75
         Height = 15
-        Caption = 'lblServico'
+        Caption = 'Procedimento'
       end
       object cbCliente: TDBLookupComboBox
         Left = 24
@@ -284,14 +287,33 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
         ListSource = DataModule1.DSClientes
         TabOrder = 0
       end
-      object cbServico: TDBLookupComboBox
+      object cbProcedimento: TDBLookupComboBox
         Left = 24
         Top = 64
         Width = 233
         Height = 23
-        ListField = 'NOME'
-        ListSource = DataModule1.DSClientes
+        KeyField = 'IDSERVICO'
+        ListField = 'NOMESERVICO'
+        ListSource = DataModule1.dsProcedimentos
         TabOrder = 1
+      end
+      object edtDataProcedimento: TDateTimePicker
+        Left = 24
+        Top = 104
+        Width = 186
+        Height = 23
+        Date = 45834.000000000000000000
+        Time = 0.314158483794017200
+        TabOrder = 2
+      end
+      object memObservacoes: TMemo
+        Left = 24
+        Top = 144
+        Width = 785
+        Height = 153
+        Lines.Strings = (
+          '')
+        TabOrder = 3
       end
     end
     object TabSheet2: TTabSheet
