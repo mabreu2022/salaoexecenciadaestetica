@@ -44,6 +44,10 @@ type
     lblProcedimento: TLabel;
     edtDataProcedimento: TDateTimePicker;
     memObservacoes: TMemo;
+    btnAdicionaFotosdoProcedimento: TBitBtn;
+    Label1: TLabel;
+    lblDataDoProcedimento: TLabel;
+    lblObservacoes: TLabel;
     procedure btnSalvarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
@@ -86,6 +90,7 @@ End;
 procedure TFrmCadastroProcedimento.btnSalvarClick(Sender: TObject);
 begin
   DataModule1.qryProcedimentos.FieldByName('IDCLIENTE').AsInteger := FIDCliente;
+  btnAdicionaFotosdoProcedimento.Enabled:= True;
 end;
 
 procedure TFrmCadastroProcedimento.DefinirCliente(AIDCliente: Integer);

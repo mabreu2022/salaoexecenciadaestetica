@@ -14,6 +14,8 @@ type
     FDATAHORA: TDateTime;
     FOBSERVACOES: TStringStream;
     FCONCLUIDO: Boolean;
+    FATIVO: String;
+    procedure SetATIVO(const Value: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -24,6 +26,7 @@ type
     property DATAHORA: TDateTime read FDATAHORA write FDATAHORA;
     property OBSERVACOES: TStringStream read FOBSERVACOES write FOBSERVACOES;
     property CONCLUIDO: Boolean read FCONCLUIDO write FCONCLUIDO;
+    property ATIVO: String read FATIVO write SetATIVO;
   end;
 
 implementation
@@ -39,6 +42,11 @@ destructor TProcedimento.Destroy;
 begin
   FOBSERVACOES.Free;
   inherited;
+end;
+
+procedure TProcedimento.SetATIVO(const Value: String);
+begin
+  FATIVO := Value;
 end;
 
 end.
