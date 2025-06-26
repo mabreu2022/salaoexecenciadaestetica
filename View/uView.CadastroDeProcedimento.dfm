@@ -12,6 +12,7 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
+  OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
@@ -22,7 +23,7 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
     Align = alBottom
     TabOrder = 0
     object btnSalvar: TBitBtn
-      Left = 266
+      Left = 250
       Top = 9
       Width = 75
       Height = 25
@@ -67,7 +68,7 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
       OnClick = btnSalvarClick
     end
     object btnNovo: TBitBtn
-      Left = 24
+      Left = 8
       Top = 9
       Width = 75
       Height = 25
@@ -112,7 +113,7 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
       OnClick = btnNovoClick
     end
     object btnEditar: TBitBtn
-      Left = 105
+      Left = 89
       Top = 9
       Width = 75
       Height = 25
@@ -154,9 +155,10 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
         DCFFFFE4C7FFFDDFA6FAC4A9165C000000000000000000000000000000000000
         000000000000}
       TabOrder = 2
+      OnClick = btnEditarClick
     end
     object btnApagar: TBitBtn
-      Left = 186
+      Left = 170
       Top = 9
       Width = 75
       Height = 25
@@ -244,13 +246,58 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
       TabOrder = 4
     end
     object DBNavigator1: TDBNavigator
-      Left = 360
+      Left = 400
       Top = 9
-      Width = 365
+      Width = 340
       Height = 25
       DataSource = DataModule1.DSClientes
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbRefresh]
       TabOrder = 5
+    end
+    object btnCancelar: TBitBtn
+      Left = 331
+      Top = 9
+      Width = 86
+      Height = 25
+      Caption = 'Cancelar'
+      Glyph.Data = {
+        42040000424D4204000000000000420000002800000010000000100000000100
+        20000300000000040000C20E0000C20E000000000000000000000000FF0000FF
+        0000FF0000000000000000000000000000000000000D26262614556A7F0C1A1A
+        2813191919140C19191426333F1459722614001C00121212000E000000000000
+        00000000000000000000000000006F839857B5CEDEEFB3CEE1F8BEDAEDEEB3CC
+        E0F7B1CBDEF8B2CCE0F8B1CDD8F87880B2F8695CD3F57568E7F1655BC4B22C2C
+        37170000000000000000796C4C50A2B0B3E7D8F8FFFFC3DFF3FFC0DBEFFFC1DD
+        F1FFC1DDF1FFC8E6F5FF9FAFDDFF655BC1FF6A65B8FF7168D1FF736EC6FF645A
+        C2B5000000000000170BBAA46FF9C2C8BBFFC4E4FEFFB2CCDFFFACC5D7FFADC6
+        D8FFADC6D9FFAECAD3FF7979C9FF7564F4FF5E6384FF5A6568FF7369DAFF7165
+        E0FB1122110F000D2813C4AD75F9B8BFB5FFC4E4FEFFBFDAEEFFBDD8EBFFBDD8
+        ECFFBDD8ECFFC2E0EAFF8083CEFF6A5CD5FF5C6085FF5E6287FF6C68BCFF6F63
+        DCF11C1C0009000E2A12C3AC75F6B8BFB5FFC5E5FEFFB3CDE0FFADC6D8FFAEC7
+        D9FFAEC7D9FFB2CCDCFF9FB4CEFF6760BEFF6B5CDCFF7E6EFEFF756CD8FF5A54
+        A87C00000000000E2A12C3AC75F6B8BFB5FFC4E4FEFFBED9EDFFBCD7EAFFBCD7
+        EBFFBCD7EBFFBCD7EBFFC0DDEBFFA4B9D3FF868BD5FF6D69C2D75752A4600000
+        000000000000000E2A12C3AC75F6B8BFB5FFC5E5FEFFB4CEE0FFAEC7D9FFAFC8
+        DBFFAFC8DBFFAFC8DAFFADC6D9FFBBD7E7FFC6E9F6FF7B979488000000000000
+        000000000000000E2A12C3AC75F6B8BFB5FFC4E4FEFFBDD9ECFFBBD6E9FFBCD6
+        EAFFBCD6EAFFBCD6EAFFBBD6E9FFC0DBEFFFC2E1F7FF8198A890000000000000
+        000000000000000D2813C2AA74F7B8BFB5FFC5E5FEFFB4CEE1FFAFC8DAFFB0C9
+        DCFFB0C9DCFFB1CADDFFAEC6D9FFACC4D7FFBEDDF3FF7C93A29A000000000000
+        0000000000004545450BCFB77AEEB7BEB4FFC4E4FEFFBDD8EBFFBAD5E8FFBBD5
+        E9FFBBD5E9FFBBD6EAFFAAC2D4FFB4CEDEFFA2BACCFF59687358000000000000
+        0000000000002424360ECAB277F1B7BFB7FFC6E6FFFFB3CDDFFFADC5D8FFAEC7
+        D9FFB0C9DBFFA3BBCCFFAAC3D7FFC5E3F4FF7686917200000000000000000000
+        000000000000000D2813C6AE76F7B5B8AAFFBEE2FFFFC7E7FFFFC7E8FFFFC7E7
+        FFFFC9EAFFFFBEDFFAFF9DB6CBFFA9A48DFF6229001F2D5A62653352594A2C37
+        421700000000000F2D11CBB681FFDEC98FFFB6B7A6FFB9BDAFFFB9BDAEFFB9BD
+        AEFFBABDAFFFB3B8ACFFBAAE88FFDFC586FF6D67542A28505A3338696D913E7D
+        80AF0000000300000002A29571ABD3BD86F6C8B177F7C5AE75F7C5AE75F7C5AE
+        75F7C5AF76F6C7AF77F6D4BE84F6AA9C74C01F1F1F08335E637132535A4C2F4B
+        4B1B000000000000000000000000000E2A120D1A2813000E2A12000E2A12000E
+        2A12000E2A12000E2A12000E2A12000000000000000000000000000000000000
+        000000000000}
+      TabOrder = 6
+      OnClick = btnCancelarClick
     end
   end
   object PageControl1: TPageControl
@@ -283,6 +330,7 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
         Width = 119
         Height = 15
         Caption = 'Data do Procedimento'
+        Visible = False
       end
       object lblObservacoes: TLabel
         Left = 24
@@ -319,6 +367,7 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
         Date = 45834.000000000000000000
         Time = 0.314158483794017200
         TabOrder = 2
+        Visible = False
       end
       object memObservacoes: TMemo
         Left = 24
@@ -373,6 +422,14 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
           0000000000000000000000000000000000000000000000000000000000000000
           000000000000}
         TabOrder = 4
+      end
+      object chkConcluido: TCheckBox
+        Left = 32
+        Top = 320
+        Width = 178
+        Height = 17
+        Caption = 'Procedimento conclu'#237'do'
+        TabOrder = 5
       end
     end
     object TabSheet2: TTabSheet
@@ -463,6 +520,7 @@ object FrmCadastroProcedimento: TFrmCadastroProcedimento
         TitleFont.Height = -12
         TitleFont.Name = 'Segoe UI'
         TitleFont.Style = []
+        OnCellClick = DBGrid1CellClick
       end
     end
   end

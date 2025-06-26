@@ -5,21 +5,25 @@ interface
 uses
   uInterfaces.ProcedimentoController,
   uModel.Procedimento,
-  uDAO.Procedimento;
+  uDAO.Procedimento,
+  Data.DB, uDAO.Cliente;
 
 type
   TProcedimentoController = class(TInterfacedObject, IProcedimentoController)
   private
     FDAO: TProcedimentoDAO;
+    FClienteDAO: TClienteDAO;
   public
-    constructor Create;
-    destructor Destroy; override;
-
     procedure Inserir(AProcedimento: TProcedimento);
     procedure Atualizar(AProcedimento: TProcedimento);
     procedure Excluir(ID: Integer);
     function BuscarPorID(ID: Integer): TProcedimento;
     function ListarTodos(FiltroDescricao: string = ''): TArray<TProcedimento>;
+    procedure NovoProcedimento;
+    function ListarClientesDataSet: TDataSet;
+    constructor Create;
+    destructor Destroy; override;
+
   end;
 
 implementation
@@ -42,10 +46,20 @@ begin
   FDAO.Inserir(AProcedimento);
 end;
 
+function TProcedimentoController.ListarClientesDataSet: TDataSet;
+begin
+  Result := FClienteDAO.DataSetTodos;
+end;
+
 function TProcedimentoController.ListarTodos(
   FiltroDescricao: string): TArray<TProcedimento>;
 begin
   Result := FDAO.ListarTodos(FiltroDescricao).ToArray;
+end;
+
+procedure TProcedimentoController.NovoProcedimento;
+begin
+  // Pode deixar vazio ou preparar algo caso use cache
 end;
 
 procedure TProcedimentoController.Atualizar(AProcedimento: TProcedimento);

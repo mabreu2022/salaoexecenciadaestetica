@@ -18,6 +18,8 @@ type
     procedure Excluir(AID: Integer);
     function BuscarPorID(AID: Integer): TCliente;
     function ListarTodos: TObjectList<TCliente>;
+    function DataSetTodos: TFDQuery;
+
   end;
 
 implementation
@@ -113,6 +115,17 @@ begin
     Free;
   end;
 
+end;
+
+function TClienteDAO.DataSetTodos: TFDQuery;
+var
+  Qry: TFDQuery;
+begin
+  Qry := TFDQuery.Create(nil);
+  Qry.Connection := DataModule1.FDConnection1;
+  Qry.SQL.Text := 'SELECT IDCLIENTE, NOME FROM CLIENTES ORDER BY NOME';
+  Qry.Open;
+  Result := Qry;
 end;
 
 function TClienteDAO.ListarTodos: TObjectList<TCliente>;
